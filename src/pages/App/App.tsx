@@ -19,11 +19,11 @@ const [user, setUser] = useState<UserState>(getUser())
 
   return (
     <main>
-      <NavBar />
+      <NavBar user={user} setUser={setUser} />
       <Routes>
       <Route path="/" element={<HomePage/>}></Route>
-      <Route path='/users/login' element={<LoginPage setUser={setUser} />}></Route>
-      <Route path='/users/register' element={<RegisterPage setUser={setUser} />}></Route>
+      <Route path="/users/login" element={<LoginPage setUser={setUser} />}></Route>
+      <Route path="/users/register" element={<RegisterPage setUser={setUser} />}></Route>
       </Routes>
     </main>
   )
