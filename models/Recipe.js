@@ -19,7 +19,7 @@ const ingredientSchema = new Schema ({
         trim: true,
     },
     quantity: {
-        type: Number,
+        type: String,
         required: true,
     },
     measurement: {
@@ -41,7 +41,7 @@ const recipeSchema = new Schema({
         type: String, 
         match: /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/, 
     },
-    cusine: {
+    cuisine: {
         type: String
     },
     description: { 
