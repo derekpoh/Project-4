@@ -13,7 +13,13 @@ const create = async (req,res) => {
 }
 
 const show = async (req,res) => {
-    const recipe = await Recipe.findById(req.params.id)
+    try {
+        const recipe = await Recipe.findById(req.params.id)
+        res.status(201).json(recipe);
+        console.log(req.body)
+        } catch (error) {
+            res.status(500).json(error);
+        }
 }
 
 module.exports = {
