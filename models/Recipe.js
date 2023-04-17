@@ -8,7 +8,6 @@ const commentSchema = new Schema({
     }],
     content: {
         type: String,
-        required: true
     }
 })
 
@@ -30,9 +29,10 @@ const ingredientSchema = new Schema ({
 const recipeSchema = new Schema({
     owner: {
         type: Schema.Types.ObjectId,
+        required: true,
         ref: "User"
     },
-    name: {
+    recipe: {
         type: String,
         required: true,
         trim: true,

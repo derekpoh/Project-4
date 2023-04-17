@@ -6,9 +6,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 
-function CreateRecipeForm() {
+function CreateRecipeForm( {user} ) {
 
   const [recipe, setRecipe] = useState({
+    owner: user,
     recipe: "",
     cuisine: "",
     description: "",
@@ -16,13 +17,15 @@ function CreateRecipeForm() {
       name: "",
       quantity: "",
       measurement: "",
-    }]
+    }],
+    instructions: [""]
   });
   const [newIngredient, setNewIngredient] = useState({
     name: "",
     quantity: "",
     measurement: "",
   });
+  const [newInstruction, setNewInstruction] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -53,6 +56,7 @@ function CreateRecipeForm() {
     });
   };
 
+
   const handleUpdateIngredient = (index: number, field: string, value: string | number) => {
     setRecipe(prevRecipe => {
       const updatedIngredients = [...prevRecipe.ingredients];
@@ -66,10 +70,58 @@ function CreateRecipeForm() {
       };
     });
   };
+
+const handleAddInstruction = () => {
+  setRecipe({
+    ...recipe,
+    instructions: [...recipe.instructions, newInstruction],
+  });
+  setNewInstruction("");
+};
+
+const handleDeleteInstruction = (index: number) => {
+  setRecipe({
+    ...recipe,
+    instructions: [
+      ...recipe.instructions.slice(0, index),
+      ...recipe.instructions.slice(index + 1),
+    ],
+  });
+};
+
+const handleUpdateInstruction = (index: number, newValue: string) => {
+  setRecipe({
+    ...recipe,
+    instructions: [
+      ...recipe.instructions.slice(0, index),
+      newValue,
+      ...recipe.instructions.slice(index + 1),
+    ],
+  });
+};
+
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    try{
+      const response = await fetch("/api/recipes/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(recipe), 
+      });
+      console.log(recipe)
+      return response.json();
+    } catch {
+
+    }
+  }
+
   
 
   return (
-        <Box component="form" autoComplete="off"  sx={{ mt: 1 }}>
+        <Box component="form" onSubmit={handleSubmit} autoComplete="off"  sx={{ mt: 1 }}>
         <TextField
           margin="normal"
           required
@@ -106,21 +158,21 @@ function CreateRecipeForm() {
             <li key={index} style={{listStyleType: "none"}}>
           <TextField
             margin="normal"
-            value={recipe.ingredients[index].name}
+            value={ingredient.name}
             onChange={(event) =>
               handleUpdateIngredient(index, "name", event.target.value)
             }
           />
           <TextField
               margin="normal"
-                value={recipe.ingredients[index].quantity}
+                value={ingredient.quantity}
                 onChange={(event) =>
                   handleUpdateIngredient(index, "quantity" , event.target.value)
                 }
               />
           <TextField
               margin="normal"
-                value={recipe.ingredients[index].measurement}
+                value={ingredient.measurement}
                 onChange={(event) =>
                   handleUpdateIngredient(index, "measurement" ,event.target.value)
                 }
@@ -160,9 +212,38 @@ function CreateRecipeForm() {
             />
             <br/>
             <Button 
-            type="button" 
             onClick={handleAddIngredient}>
               Add Ingredient
+            </Button>
+          </li>
+        </ul>
+      </label>
+      <label>
+        Instructions:
+        <ul style={{ listStyleType: "none", margin: 0, padding: 0 }}>
+          {recipe.instructions.map((instruction, index) => (
+            <li key={index}>
+          <TextField
+            margin="normal"
+            value={instruction}
+            onChange={(event) =>
+            handleUpdateInstruction(index, event.target.value)
+                }
+              />
+              <Button 
+              onClick={() => handleDeleteInstruction(index)}>
+                Delete
+              </Button>
+            </li>
+          ))}
+          <li>
+          <TextField
+            margin="normal"
+            value={newInstruction}
+            onChange={(event) => setNewInstruction(event.target.value)}
+            />
+            <Button onClick={handleAddInstruction}>
+              Add Instruction
             </Button>
           </li>
         </ul>

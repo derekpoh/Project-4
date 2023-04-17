@@ -9,7 +9,7 @@ import CreateRecipeForm from './CreateRecipeForm';
 
 const theme = createTheme();
 
-const CreateRecipePage = () => {
+const CreateRecipePage = ( {user} ) => {
     return(
         <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
@@ -25,7 +25,7 @@ const CreateRecipePage = () => {
             <Typography component="h1" variant="h5">
               New Recipe
             </Typography>
-            <CreateRecipeForm />
+            <CreateRecipeForm user={user} />
           </Box>
         </Container>
       </ThemeProvider>

@@ -9,6 +9,7 @@ import UserAccountPage from '../UserAccountPage/UserAccountPage';
 import MyRecipesPage from '../MyRecipesPage/MyRecipesPage';
 import CreateRecipePage from '../CreateRecipePage/CreateRecipePage';
 import BookmarksPage from '../BookmarksPage/BookmarksPage';
+import RecipeDetailsPage from '../RecipeDetails/RecipeDetailsPage';
 
 type UserState = {
   username: string;
@@ -30,8 +31,9 @@ const [user, setUser] = useState<UserState>(getUser())
       <Route path="/users/register" element={<RegisterPage setUser={setUser} />}></Route>
       <Route path="/users/account" element={<UserAccountPage />}></Route>
       <Route path="/users/account/myrecipes" element={<MyRecipesPage />}></Route>
-      <Route path="/users/account/createrecipe" element={<CreateRecipePage />}></Route>
+      <Route path="/users/account/createrecipe" element={<CreateRecipePage user={user} />}></Route>
       <Route path="/users/account/bookmarks" element={<BookmarksPage />}></Route>
+      <Route path="/recipes/:id" element={<RecipeDetailsPage />}></Route>
       </Routes>
     </main>
   )
