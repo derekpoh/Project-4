@@ -2,12 +2,22 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const commentSchema = new Schema({
-    commenter: [{
+    commenter: {
         type: Schema.Types.ObjectId,
         ref: "User"
-    }],
+    },
     content: {
         type: String,
+    }
+})
+
+const ratingSchema = new Schema({
+    rater: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    },
+    rating: {
+        type: Number,
     }
 })
 
@@ -53,9 +63,7 @@ const recipeSchema = new Schema({
         type: [String],
         required: true
     },
-    rating: {
-        type: [Number]
-    },
+    rating: [ratingSchema],
     views: {
         type: Number,
         default: 0

@@ -4,12 +4,12 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CreateRecipeForm from './CreateRecipeForm';
-
+import type { UserState } from '../../utilities/type-declaration';
 
 
 const theme = createTheme();
 
-const CreateRecipePage = ( {user} ) => {
+const CreateRecipePage = ( {user}:{user:UserState} ) => {
     return(
         <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">

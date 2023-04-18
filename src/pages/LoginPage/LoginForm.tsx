@@ -7,9 +7,9 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { SetUserType } from '../../utilities/type-declaration';
 
-
-const LoginForm = ( {setUser} ) => {
+const LoginForm = ( {setUser}: {setUser : SetUserType} ) => {
 
     const [credentials, setCredentials] = useState({
         email: "",

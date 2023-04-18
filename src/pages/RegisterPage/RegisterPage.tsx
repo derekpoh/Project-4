@@ -6,11 +6,11 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import RegisterForm from './RegisterForm';
-
+import { SetUserType } from '../../utilities/type-declaration';
 
 const theme = createTheme();
 
-const RegisterPage = ( {setUser} ) => {
+const RegisterPage = ( {setUser}: {setUser : SetUserType} ) => {
 
   return (
     <ThemeProvider theme={theme}>

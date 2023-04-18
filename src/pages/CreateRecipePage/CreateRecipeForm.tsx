@@ -4,9 +4,9 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { UserState } from '../../utilities/type-declaration';
 
-
-function CreateRecipeForm( {user} ) {
+function CreateRecipeForm( {user}:{user:UserState} ) {
 
   const [recipe, setRecipe] = useState({
     owner: user,
@@ -111,10 +111,14 @@ const handleUpdateInstruction = (index: number, newValue: string) => {
         },
         body: JSON.stringify(recipe), 
       });
-      console.log(recipe)
-      return response.json();
-    } catch {
-
+      await response.json();
+      if (response.ok) {
+        console.log(response)
+      } else {
+        throw new Error("Failed to create recipe")
+      }
+    } catch (error) {
+      console.error(error)
     }
   }
 

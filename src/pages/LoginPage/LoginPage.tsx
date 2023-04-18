@@ -6,12 +6,12 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import LoginForm from './LoginForm';
-
+import { SetUserType } from '../../utilities/type-declaration';
 
 
 const theme = createTheme();
 
-const LoginPage = ( {setUser} ) => {
+const LoginPage = ( {setUser}: {setUser : SetUserType} ) => {
 
   return (
     <ThemeProvider theme={theme}>
