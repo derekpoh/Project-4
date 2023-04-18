@@ -50,17 +50,57 @@ const setRating = async (req,res) => {
     }
     }
 
-    const calculateAverageRating = (ratings) => {
+const calculateAverageRating = (ratings) => {
         let total = 0;
         ratings.forEach((r) => {
           total += r.rating;
         });
-        const averageRating = total / ratings.length.toFixed(1);
+        const averageRating = (total / ratings.length).toFixed(2);
+        if (isNaN(averageRating) || !averageRating ) return "No Rating"
         return averageRating;
       };
+
+const setComment = async (req,res) => {
+    try {
+        const { comment , user } = req.body
+        const updatedRecipe = await Recipe.findByIdAndUpdate(
+            { _id: req.params.id},
+            { $push: {"comments":[{ 
+                "commenter": user._id, 
+                "name": user.username, 
+                "content": comment,
+             }]} 
+            },
+            { new: true }
+            );
+              res.status(201).json(updatedRecipe);
+          }
+          catch (error) {
+            res.status(500).json(error);
+        }
+    }
+
+const myRecipes = async (req,res) => {
+  try {
+    const recipes = await Recipe.find({ "owner": req.params.id })
+    const recipeArray = []
+    recipes.forEach(recipe => {
+      const averageRating = calculateAverageRating(recipe.rating)
+      recipeArray.push({
+        ...recipe.toJSON(),
+        averagerating: averageRating
+      })
+  })
+    res.status(201).json(recipeArray);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}
 
 module.exports = {
     create,
     show,
-    setRating
+    setRating,
+    setComment,
+    myRecipes
 }

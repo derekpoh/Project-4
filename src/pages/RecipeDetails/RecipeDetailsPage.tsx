@@ -2,12 +2,11 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
+import TextField from '@mui/material/TextField';
 import { RecipeDetails } from '../../utilities/type-declaration';
 import type { UserState } from '../../utilities/type-declaration';
 
-// const getLabelText = (rating: number) => {
-//   return `${rating} Star${rating !== 1 ? 's' : ''}, ${rating}`;
-// }
+
 
 const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
   const [recipe, setRecipe] = useState<RecipeDetails>({
@@ -20,9 +19,15 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
   });
   const [rating, setRating] = useState<number|null>(null);
   const [hover, setHover] = useState(-1);
-  const [averageRating, setAverageRating] = useState<number|null>(null);
+  const [averageRating, setAverageRating] = useState<number|"No Rating">("No Rating");
+  const [comment, setComment] = useState("");
+  const [reversedComment, setReversedComment] = useState([{
+    name: "",
+    content: "",
+    createdAt: "",
+  }])
 
-  const  { id }  = useParams()
+  const  { id }  = useParams();
   
   useEffect(() => {
         const fetchRecipe = async () => {
@@ -31,6 +36,8 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
           const res = await response.json();
           setRecipe(res.recipe)
           setAverageRating(res.averageRating)
+          const reversedArray = res.recipe.comments.reverse()
+          setReversedComment(reversedArray)
       } catch (err) {
         console.error(err);
       }
@@ -53,6 +60,30 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
         setAverageRating(averageRating)
       } else {
         throw new Error("Failed to submit rating")
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const handleComment = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    try{
+      const response = await fetch(`/api/recipes/${id}/comment`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify( {comment, user} ), 
+      });
+      const updatedRecipe = await response.json();
+      if (response.ok) {
+        setRecipe(updatedRecipe)
+        const reversedArray = updatedRecipe.comments.reverse()
+        setReversedComment(reversedArray)
+        setComment("")
+      } else {
+        throw new Error("Failed to submit comment")
       }
     } catch (error) {
       console.error(error)
@@ -91,7 +122,6 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
         name="rating"
         value={rating}
         precision={0.5}
-        //getLabelText={getLabelText}
         onChange={(event, newRating) => {
           setRating(newRating);
         }}
@@ -102,7 +132,28 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
       <Box sx={{ ml: 2 }}>{hover !== -1 ? hover : rating}</Box>
       <button onClick={(event)=>handleRating(event)}>
         Submit Rating
-      </button>
+      </button> <br/>
+      Leave a comment: <br/>
+      <TextField 
+          margin="normal"
+          required
+          fullWidth
+          autoComplete="off"
+          name="comment"
+          value={comment}
+          onChange={(event) => setComment(event.target.value)}/> <br/>
+      <button onClick={(event)=>handleComment(event)}>
+        Submit Comment
+      </button> <br/>
+      {recipe?.comments?.length} Comments
+      <ul>
+        {reversedComment.map((comment, index) => (
+          <li key={index}>
+            {comment.name}: {comment.content} ( {comment.createdAt && new Date(comment.createdAt).toLocaleString()} )
+            </li>
+        )
+        )}
+        </ul>
         </Box>
     )
 }

@@ -35,7 +35,7 @@ const LoginForm = ( {setUser}: {setUser : SetUserType} ) => {
       };
 
     return(
-        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+        <Box component="form" autoComplete="off" onSubmit={handleSubmit} sx={{ mt: 1 }}>
         <TextField
           margin="normal"
           required

@@ -1,6 +1,7 @@
 import { ObjectId } from 'mongodb';
 
 export type UserState = {
+    _id: ObjectId,
     username: string;
     email: string;
     password: string;
@@ -10,6 +11,7 @@ export type UserState = {
 export type SetUserType = (user: UserState) => void
 
 export type RecipeDetails = {
+  _id: ObjectId,
   owner: ObjectId | string,
   recipe: string,
   cuisine: string,
@@ -17,13 +19,16 @@ export type RecipeDetails = {
   ingredients: EmbeddedIngredients[],
   instructions: string[],
   rating?: EmbeddedRating[],
+  averagerating?: string,
   views: number,
   comments?: EmbeddedComment[],
 }
 
 type EmbeddedComment = {
   commenter?: ObjectId,
-  content?: string
+  name?: string,
+  content?: string,
+  createdAt?: Date 
 }
 
 type EmbeddedRating = {

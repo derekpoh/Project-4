@@ -6,9 +6,17 @@ const commentSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "User"
     },
+    name: {
+        type: String,
+    },
     content: {
         type: String,
-    }
+    },
+    createdAt: { 
+        type: Date, 
+        default: Date.now}
+}, {
+    timestamps: true
 })
 
 const ratingSchema = new Schema({
@@ -19,6 +27,8 @@ const ratingSchema = new Schema({
     rating: {
         type: Number,
     }
+}, {
+    timestamps: true
 })
 
 const ingredientSchema = new Schema ({
@@ -34,6 +44,8 @@ const ingredientSchema = new Schema ({
     measurement: {
         type: String,
     }
+}, {
+    timestamps: true
 })
 
 const recipeSchema = new Schema({
