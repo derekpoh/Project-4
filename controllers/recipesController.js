@@ -2,15 +2,17 @@ const Recipe = require("../models/Recipe")
 const VIEWINCREASE = 0.5
 
 
-const create = async (req,res) => {
-    try {
-        await Recipe.create(req.body);
-        res.status(201).json(req.body);
-        } catch (error) {
-            res.status(500).json(error);
-        }
-}
+const calculateAverageRating = (ratings) => {
+        let total = 0;
+        ratings.forEach((r) => {
+          total += r.rating;
+        });
+        const averageRating = (total / ratings.length).toFixed(2);
+        if (isNaN(averageRating) || !averageRating ) return "No Rating"
+        return parseInt(averageRating);
+      };
 
+      
 const show = async (req,res) => {
     try {
         const recipe = await Recipe.findByIdAndUpdate(
@@ -25,14 +27,31 @@ const show = async (req,res) => {
         }
 }
 
+const myRecipes = async (req,res) => {
+  try {
+    const recipes = await Recipe.find({ "owner": req.params.id })
+    const recipeArray = []
+    recipes.forEach(recipe => {
+      const averageRating = calculateAverageRating(recipe.rating)
+      recipeArray.push({
+        ...recipe.toJSON(),
+        averagerating: averageRating
+      })
+  })
+    res.status(201).json(recipeArray);
+    } catch (error) {
+        res.status(500).json(error);
+      }
+    }
+
 const setRating = async (req,res) => {
-    try {
+  try {
     const {rating,user} = req.body
     const updatedRecipe = await Recipe.findOneAndUpdate(
         { _id: req.params.id, 'rating.rater': user._id },
         { $set: { 'rating.$.rating': rating } },
         { new: true }
-      );
+        );
       if (updatedRecipe) {
         const averageRating = calculateAverageRating(updatedRecipe.rating)
         res.status(201).json(averageRating);
@@ -41,24 +60,31 @@ const setRating = async (req,res) => {
             { _id: req.params.id, 'rating.rater': { $ne: user._id } },
             { $push: { rating: { rater: user._id, rating: rating } } },
             { new: true }
-          );
-        const averageRating = calculateAverageRating(newUpdatedRecipe.rating)
-          res.status(201).json(averageRating);
-      }
+            );
+            const averageRating = calculateAverageRating(newUpdatedRecipe.rating)
+            res.status(201).json(averageRating);
+          }
     } catch (error) {
         res.status(500).json(error);
     }
-    }
-
-const calculateAverageRating = (ratings) => {
-        let total = 0;
-        ratings.forEach((r) => {
-          total += r.rating;
-        });
-        const averageRating = (total / ratings.length).toFixed(2);
-        if (isNaN(averageRating) || !averageRating ) return "No Rating"
-        return averageRating;
-      };
+  }
+  
+const cuisine = async (req,res) => {
+  try {
+    const recipes = await Recipe.find({ "cuisine": req.params.cuisine }).populate("owner");
+    const recipeArray = []
+    recipes.forEach(recipe => {
+      const averageRating = calculateAverageRating(recipe.rating)
+      recipeArray.push({
+        ...recipe.toJSON(),
+        averagerating: averageRating
+      })
+  })
+    res.status(201).json(recipeArray);
+    } catch (error) {
+        res.status(500).json(error);
+      }
+}
 
 const setComment = async (req,res) => {
     try {
@@ -80,27 +106,41 @@ const setComment = async (req,res) => {
         }
     }
 
-const myRecipes = async (req,res) => {
+const create = async (req,res) => {
+    try {
+        const recipe = await Recipe.create(req.body);
+        res.status(201).json(recipe);
+        } catch (error) {
+            res.status(500).json(error);
+        }
+  }
+
+const update = async (req,res) => {
   try {
-    const recipes = await Recipe.find({ "owner": req.params.id })
-    const recipeArray = []
-    recipes.forEach(recipe => {
-      const averageRating = calculateAverageRating(recipe.rating)
-      recipeArray.push({
-        ...recipe.toJSON(),
-        averagerating: averageRating
-      })
-  })
-    res.status(201).json(recipeArray);
+    const recipe = await Recipe.findByIdAndUpdate(req.params.id, req.body, { new: true }).populate("owner");
+    res.status(201).json(recipe);
     } catch (error) {
         res.status(500).json(error);
     }
 }
+
+const deleteRecipe = async (req,res) => {
+  try {
+    const recipe = await Recipe.findByIdAndDelete(req.params.id);
+    res.status(201).json(recipe);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}
+
 
 module.exports = {
     create,
     show,
     setRating,
     setComment,
-    myRecipes
+    myRecipes,
+    cuisine,
+    update,
+    delete: deleteRecipe
 }

@@ -111,14 +111,14 @@ const handleUpdateInstruction = (index: number, newValue: string) => {
         },
         body: JSON.stringify(recipe), 
       });
-      await response.json();
+      const data = await response.json();
       if (response.ok) {
-        console.log(response)
+        navigate(`/recipes/${data._id}`)
       } else {
         throw new Error("Failed to create recipe")
       }
     } catch (error) {
-      console.error(error)
+      setError(error.message)
     }
   }
 

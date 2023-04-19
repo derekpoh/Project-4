@@ -1,14 +1,25 @@
 import { ObjectId } from 'mongodb';
+import { Schema, Document, Types } from 'mongoose';
 
 export type UserState = {
-    _id: ObjectId,
+    _id?: ObjectId,
     username: string;
     email: string;
     password: string;
     bookmarks?: object[]; 
   };
 
-export type SetUserType = (user: UserState) => void
+export type SetUserType = (user: UserState|null) => void
+
+export type SearchResults = {
+  _id: ObjectId,
+  recipe: string,
+  cuisine: string,
+  views: number,
+  averagerating: number,
+  ingredients: EmbeddedIngredients[]
+  owner: UserState ,
+}
 
 export type RecipeDetails = {
   _id: ObjectId,
@@ -41,3 +52,4 @@ type EmbeddedIngredients = {
   quantity: string,
   measurement?: string
 }
+

@@ -85,4 +85,14 @@ const recipeSchema = new Schema({
     timestamps: true
 })
 
+recipeSchema.pre('save', function(next) {
+    this.recipe = capitalize(this.recipe);
+    this.cuisine = capitalize(this.cuisine);
+    next();
+  });
+  
+const capitalize = (str) => {
+    return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  }
+
 module.exports = mongoose.model('Recipe', recipeSchema);

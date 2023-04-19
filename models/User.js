@@ -40,5 +40,13 @@ userSchema.pre('save', async function(next) {
     return next();
 });
 
+userSchema.pre('save', function(next) {
+    this.username = capitalize(this.username);
+    next();
+  });
+  
+const capitalize = (str) => {
+    return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  }
 
 module.exports = mongoose.model('User', userSchema);

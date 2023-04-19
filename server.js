@@ -8,6 +8,7 @@ const app = express();
 const port = process.env.PORT;
 const usersRouter = require("./routes/usersRouter");
 const recipesRouter = require("./routes/recipesRouter");
+const searchRouter = require("./routes/searchRouter");
 
 
 app.use(logger("dev"));
@@ -15,7 +16,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "dist")));
 app.use("/api/users", usersRouter);
 app.use("/api/recipes", recipesRouter)
-
+app.use("/api/search", searchRouter)
 
 app.get("/api", (req, res) => {
     res.send("Server working");

@@ -9,6 +9,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { Badge, MenuItem, Menu, Divider, ListItemText, Paper, AppBar, Box, Toolbar, IconButton, InputBase } from "@mui/material";
 import LogoutIcon from '@mui/icons-material/Logout';
+import { SetUserType, UserState } from '../../utilities/type-declaration';
 
 
 
@@ -53,7 +54,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 
-const NavBar = ({ user, setUser }) => {
+const NavBar = ({ user, setUser }: { user:UserState|null, setUser:SetUserType }) => {
 
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -157,22 +158,22 @@ const NavBar = ({ user, setUser }) => {
       PaperProps={{elevation:0}}
     >
        <Paper sx={{ width: 240, maxWidth: '100%' }}>
-      <MenuItem onClick={() => {handleLeftMenuClose(); handleLeftLoginMenuClose(() => navigate("/1"));}}>
+      <MenuItem onClick={() => {handleLeftMenuClose(); handleLeftLoginMenuClose(() => navigate("/recipes/cuisines/American"));}}>
         <ListItemText>American</ListItemText>
       </MenuItem>
-      <MenuItem onClick={() => {handleLeftMenuClose(); handleLeftLoginMenuClose(() => navigate("/2"));}}>
+      <MenuItem onClick={() => {handleLeftMenuClose(); handleLeftLoginMenuClose(() => navigate("/recipes/cuisines/Chinese"));}}>
         <ListItemText>Chinese</ListItemText>
       </MenuItem>
-      <MenuItem onClick={() => {handleLeftMenuClose(); handleLeftLoginMenuClose(() => navigate("/3"));}}>
+      <MenuItem onClick={() => {handleLeftMenuClose(); handleLeftLoginMenuClose(() => navigate("/recipes/cuisines/Indian"));}}>
         <ListItemText>Indian</ListItemText>
       </MenuItem>
-      <MenuItem onClick={() => {handleLeftMenuClose(); handleLeftLoginMenuClose(() => navigate("/4"));}}>
+      <MenuItem onClick={() => {handleLeftMenuClose(); handleLeftLoginMenuClose(() => navigate("/recipes/cuisines/Italian"));}}>
         <ListItemText>Italian</ListItemText>
       </MenuItem>
-      <MenuItem onClick={() => {handleLeftMenuClose(); handleLeftLoginMenuClose(() => navigate("/5"));}}>
+      <MenuItem onClick={() => {handleLeftMenuClose(); handleLeftLoginMenuClose(() => navigate("/recipes/cuisines/Japanese"));}}>
         <ListItemText>Japanese</ListItemText>
       </MenuItem>
-      <MenuItem onClick={() => {handleLeftMenuClose(); handleLeftLoginMenuClose(() => navigate("/6"));}}>
+      <MenuItem onClick={() => {handleLeftMenuClose(); handleLeftLoginMenuClose(() => navigate("/recipes/cuisines/Korean"));}}>
         <ListItemText>Korean</ListItemText>
       </MenuItem>
       </Paper>
