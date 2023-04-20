@@ -6,6 +6,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { UserState } from '../../utilities/type-declaration';
 
+
+const ONEMB = 1024 * 1024; // 1 MB
+
+
 const CreateRecipeForm = ( {user}:{user:UserState} ) => {
 
   const [recipe, setRecipe] = useState({
@@ -18,7 +22,8 @@ const CreateRecipeForm = ( {user}:{user:UserState} ) => {
       quantity: "",
       measurement: "",
     }],
-    instructions: [""]
+    instructions: [""],
+    imageurl: ""
   });
   const [newIngredient, setNewIngredient] = useState({
     name: "",
@@ -26,6 +31,7 @@ const CreateRecipeForm = ( {user}:{user:UserState} ) => {
     measurement: "",
   });
   const [newInstruction, setNewInstruction] = useState("");
+  //const [postImage, setPostImage] = useState( {myFile: ""} )
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -122,13 +128,59 @@ const handleUpdateInstruction = (index: number, newValue: string) => {
     }
   }
 
+  const handleFileUpload = async (event) => {
+    const file = event.target.files[0]
+    const maxSize = ONEMB;
+    if (file.size > maxSize) {
+      setError('File size exceeds the maximum allowed limit of 1 MB');
+      event.target.value = null;
+      return;
+    }
+    const base64 = await convertToBase64(file)
+    setRecipe({...recipe, imagefile: base64})
+
+  }
+
+  const convertToBase64 = (file) => {
+    return new Promise((resolve,reject) =>{
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
+        fileReader.onload = () => {
+            resolve(fileReader.result)
+        };
+        fileReader.onerror = (error) => {
+            reject(error)
+        }
+    })
+  }
   
 
-  return (
+  return ( 
         <Box component="form" onSubmit={handleSubmit} autoComplete="off"  sx={{ mt: 1 }}>
-        <TextField
-          name="upload-photo"
+        <Typography
+        variant="body2"
+        color="error"
+        align="center"
+        sx={{ marginTop: 5 }}
+      >
+        {error}
+      </Typography>
+        <input
           type="file"
+          name="imagefile"
+          accept='.jpeg, .png, .jpg'
+          multiple
+          onChange={(event) => handleFileUpload(event)}
+        />
+        <TextField
+          margin="normal"
+          fullWidth
+          id="imageurl"
+          label="Image Url (separate each Url with a comma)"
+          name="imageurl"
+          value={recipe.imageurl}
+          onChange={handleChange}
+          multiline={true}
         />
         <TextField
           margin="normal"
@@ -264,14 +316,6 @@ const handleUpdateInstruction = (index: number, newValue: string) => {
         >
           Create Recipe
         </Button>
-        <Typography
-        variant="body2"
-        color="error"
-        align="center"
-        sx={{ marginTop: 5 }}
-      >
-        {error}
-      </Typography>
       </Box>
   );
 }

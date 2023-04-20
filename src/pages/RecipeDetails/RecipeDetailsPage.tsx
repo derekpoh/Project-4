@@ -126,7 +126,7 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
 
     return(
       <ThemeProvider theme={theme}>
-      <img className="book-image" src={recipe?.imagefile} alt="Book cover image" />
+      <img className="book-image" src={recipe?.imagefile || recipe?.imageurl} alt="Recipe image" />
 
     {!isMobile && !user ? (
       <div className="recipeName" style={{ marginTop: '100px' }}>{recipe?.recipe}</div>
@@ -202,6 +202,7 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
       value={comment}
       onChange={(event) => setComment(event.target.value)}
       placeholder="Leave a comment"
+      rows={4}
     />
   </div>
   <button  onClick={(event)=>handleComment(event)}>
@@ -210,9 +211,9 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
 </div>
 <div className="parent2">
   <div className="textarea-container">
-    <span className="commenttitle">
+    <div className="commenttitle">
       {recipe?.comments?.length} Comment(s)
-    </span> <br/>
+    </div> <br/>
       <ul className='commentlist'>
         {reversedComment.map((comment, index) => (
           <li className='commentpoint' key={index}>
