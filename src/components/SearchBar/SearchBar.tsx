@@ -6,7 +6,7 @@ import { styled } from '@mui/material/styles';
 import { SearchResults } from "../../utilities/type-declaration";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import Rating from '@mui/material/Rating';
-import { SignalCellularNullSharp } from "@mui/icons-material";
+
 
 const theme = createTheme();
 
@@ -41,8 +41,6 @@ const SearchBar = () => {
           const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
           const data = await response.json();
           setResults(data);
-          // console.log(data)
-          // console.log(typeof(data[1].averagerating))
         } else {
           setResults([]);
         }

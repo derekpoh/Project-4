@@ -9,7 +9,7 @@ const calculateAverageRating = (ratings) => {
   });
   const averageRating = (total / ratings.length).toFixed(2);
   if (isNaN(averageRating) || !averageRating ) return "No Rating"
-  return parseInt(averageRating);
+  return parseFloat(averageRating);
 };
 
 const search = async (req, res) => {

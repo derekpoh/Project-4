@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const logger = require("morgan");
+const bodyParser = require("body-parser")
 require('dotenv').config();
 require('./config/database');
 
@@ -12,6 +13,8 @@ const searchRouter = require("./routes/searchRouter");
 
 
 app.use(logger("dev"));
+app.use(bodyParser.json({ limit: "10mb"}));
+app.use(bodyParser.urlencoded({ extended: true, limit: "10mb"}));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "dist")));
 app.use("/api/users", usersRouter);

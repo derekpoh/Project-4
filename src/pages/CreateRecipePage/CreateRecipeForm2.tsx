@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { UserState } from '../../utilities/type-declaration';
 
-const CreateRecipeForm = ( {user}:{user:UserState} ) => {
+const CreateRecipeForm2 = ( {user}:{user:UserState} ) => {
 
   const [recipe, setRecipe] = useState({
     owner: user,
@@ -26,6 +26,7 @@ const CreateRecipeForm = ( {user}:{user:UserState} ) => {
     measurement: "",
   });
   const [newInstruction, setNewInstruction] = useState("");
+  //const [postImage, setPostImage] = useState( {myFile: ""} )
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -122,13 +123,48 @@ const handleUpdateInstruction = (index: number, newValue: string) => {
     }
   }
 
+  const handleFileUpload = async (event) => {
+    const file = event.target.files[0]
+    const maxSize = 1024 * 1024; // 1 MB
+    if (file.size > maxSize) {
+      setError('File size exceeds the maximum allowed limit of 1 MB');
+      event.target.value = null;
+      return;
+    }
+    const base64 = await convertToBase64(file)
+    setRecipe({...recipe, imagefile: base64})
+
+  }
+
+  const convertToBase64 = (file) => {
+    return new Promise((resolve,reject) =>{
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
+        fileReader.onload = () => {
+            resolve(fileReader.result)
+        };
+        fileReader.onerror = (error) => {
+            reject(error)
+        }
+    })
+  }
   
 
-  return (
+  return ( 
         <Box component="form" onSubmit={handleSubmit} autoComplete="off"  sx={{ mt: 1 }}>
-        <TextField
-          name="upload-photo"
+        <Typography
+        variant="body2"
+        color="error"
+        align="center"
+        sx={{ marginTop: 5 }}
+      >
+        {error}
+      </Typography>
+        <input
           type="file"
+          name="imagefile"
+          accept='.jpeg, .png, .jpg'
+          onChange={(event) => handleFileUpload(event)}
         />
         <TextField
           margin="normal"
@@ -264,16 +300,8 @@ const handleUpdateInstruction = (index: number, newValue: string) => {
         >
           Create Recipe
         </Button>
-        <Typography
-        variant="body2"
-        color="error"
-        align="center"
-        sx={{ marginTop: 5 }}
-      >
-        {error}
-      </Typography>
       </Box>
   );
 }
 
-export default CreateRecipeForm;
+export default CreateRecipeForm2;

@@ -9,7 +9,7 @@ const calculateAverageRating = (ratings) => {
         });
         const averageRating = (total / ratings.length).toFixed(2);
         if (isNaN(averageRating) || !averageRating ) return "No Rating"
-        return parseInt(averageRating);
+        return parseFloat(averageRating);
       };
 
       
@@ -108,6 +108,7 @@ const setComment = async (req,res) => {
 
 const create = async (req,res) => {
     try {
+      console.log(req.body)
         const recipe = await Recipe.create(req.body);
         res.status(201).json(recipe);
         } catch (error) {

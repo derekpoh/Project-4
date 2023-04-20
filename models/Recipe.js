@@ -59,9 +59,12 @@ const recipeSchema = new Schema({
         required: true,
         trim: true,
     },
-    image: {
+    imageurl: {
         type: String, 
         match: /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/, 
+    },
+    imagefile: {
+        type: String
     },
     cuisine: {
         type: String

@@ -5,6 +5,39 @@ import Rating from '@mui/material/Rating';
 import TextField from '@mui/material/TextField';
 import { RecipeDetails } from '../../utilities/type-declaration';
 import type { UserState } from '../../utilities/type-declaration';
+import VisibilityIcon from "@mui/icons-material/Visibility";
+
+import { Link, useNavigate } from "react-router-dom";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import IconButton from '@mui/material/IconButton';
+import ButtonUnstyled, { buttonUnstyledClasses } from '@mui/base/ButtonUnstyled';
+import { Stack, Snackbar, Alert, Button } from '@mui/material';
+import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import { useMediaQuery } from '@mui/material';
+import "./RecipeDetailsPage.css"
+
+const blue = {
+  500: '#007FFF',
+  600: '#0072E5',
+  700: '#0059B2',
+};
+
+const grey = {
+  100: '#eaeef2',
+  300: '#afb8c1',
+  900: '#24292f',
+};
+
+const theme = createTheme(
+  {
+  breakpoints: {
+    values: {
+      sm: 600,
+    },
+  },
+});
+
 
 
 
@@ -17,7 +50,7 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
     instructions: [],
     views: 0,
   });
-  const [rating, setRating] = useState<number|null>(null);
+  const [rating, setRating] = useState<number|null>(5);
   const [hover, setHover] = useState(-1);
   const [averageRating, setAverageRating] = useState<number|"No Rating">("No Rating");
   const [comment, setComment] = useState("");
@@ -26,8 +59,8 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
     content: "",
     createdAt: "",
   }])
-
   const  { id }  = useParams();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   
   useEffect(() => {
         const fetchRecipe = async () => {
@@ -92,14 +125,53 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
 
 
     return(
-      <Box
-      sx={{
-        '& > legend': { mt: 2 },
+      <ThemeProvider theme={theme}>
+      <img className="book-image" src={recipe?.imagefile} alt="Book cover image" />
+
+    {!isMobile && !user ? (
+      <div className="recipeName" style={{ marginTop: '100px' }}>{recipe?.recipe}</div>
+        ) : isMobile && !user ? (
+      <div className="recipeName" style={{ marginTop: '0px' }}>{recipe?.recipe}</div>
+        ) : !isMobile && user ? (
+      <div className="recipeName" style={{ marginTop: '45px' }}>{recipe?.recipe}</div>
+        ) : (
+      <div className="recipeName" style={{ marginTop: '0px' }}>{recipe?.recipe}</div>
+        )}
+
+<div className="authorName">Views: {recipe.views} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Rating: {averageRating}</div>
+
+<div className="e-copies2" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+<span>{hover !== -1 ? hover : rating}</span>
+  <div style={{ display: 'flex', alignItems: 'center' }}>
+    <Rating
+      name="rating"
+      value={rating}
+      precision={0.5}
+      onChange={(event, newRating) => {
+        setRating(newRating);
       }}
-    >
-        {recipe?.recipe} <br/>
-        {recipe?.cuisine} <br/>
-        {recipe?.description} <br/>
+      onChangeActive={(event, newHover) => {
+        setHover(newHover);
+      }}
+    />
+
+  </div>
+  <button onClick={(event)=>handleRating(event)} style={{ marginTop: '10px' }}>
+    Submit Rating
+  </button> 
+</div>
+
+
+<hr className="hr-line" />
+
+<div className="summary">
+          <h3>Description</h3>
+          {recipe.description} <p/>
+        </div>
+        <hr className="hr-line" />
+
+        <div className="summary">
+          <h3>Ingredients</h3>
         <ul>
         {recipe?.ingredients?.map((ingredient, index) => (
           <li key={index}>
@@ -108,6 +180,10 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
         )
         )}
         </ul>
+        </div>
+
+        <div className="summary">
+          <h3>Instructions</h3>
         <ul>
         {recipe?.instructions?.map((instruction, index) => (
           <li key={index}>
@@ -116,45 +192,42 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
         )
         )}
         </ul>
-        Views: {recipe?.views} <br/>
-        Average Rating: {averageRating} <br/>
-        <Rating
-        name="rating"
-        value={rating}
-        precision={0.5}
-        onChange={(event, newRating) => {
-          setRating(newRating);
-        }}
-        onChangeActive={(event, newHover) => {
-          setHover(newHover);
-        }}
-      />
-      <Box sx={{ ml: 2 }}>{hover !== -1 ? hover : rating}</Box>
-      <button onClick={(event)=>handleRating(event)}>
-        Submit Rating
-      </button> <br/>
-      Leave a comment: <br/>
-      <TextField 
-          margin="normal"
-          required
-          fullWidth
-          autoComplete="off"
-          name="comment"
-          value={comment}
-          onChange={(event) => setComment(event.target.value)}/> <br/>
-      <button onClick={(event)=>handleComment(event)}>
-        Submit Comment
-      </button> <br/>
-      {recipe?.comments?.length} Comments
-      <ul>
+        </div>
+  <div className="parent">
+  <div className="textarea-container">
+    <textarea 
+      style={{ whiteSpace: 'pre-wrap' }}
+      className="textarea"
+      name="comment"
+      value={comment}
+      onChange={(event) => setComment(event.target.value)}
+      placeholder="Leave a comment"
+    />
+  </div>
+  <button  onClick={(event)=>handleComment(event)}>
+    Submit Comment
+  </button>
+</div>
+<div className="parent2">
+  <div className="textarea-container">
+    <span className="commenttitle">
+      {recipe?.comments?.length} Comment(s)
+    </span> <br/>
+      <ul className='commentlist'>
         {reversedComment.map((comment, index) => (
-          <li key={index}>
-            {comment.name}: {comment.content} ( {comment.createdAt && new Date(comment.createdAt).toLocaleString()} )
+          <li className='commentpoint' key={index}>
+          <span className='commentname'> 
+            {comment.name} ( {comment.createdAt && new Date(comment.createdAt).toLocaleString()} )
+            </span> <br/><br/>
+           <span style={{ whiteSpace: 'pre-wrap' }}>{comment.content}</span>  
             </li>
         )
         )}
         </ul>
-        </Box>
+        </div>
+        </div>
+        
+      </ThemeProvider>
     )
 }
 
