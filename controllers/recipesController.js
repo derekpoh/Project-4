@@ -108,7 +108,6 @@ const setComment = async (req,res) => {
 
 const create = async (req,res) => {
     try {
-      console.log(req.body)
         const recipe = await Recipe.create(req.body);
         res.status(201).json(recipe);
         } catch (error) {

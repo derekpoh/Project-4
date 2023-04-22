@@ -166,7 +166,7 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
 
 <div className="summary">
           <h3>Description</h3>
-          {recipe.description} <p/>
+          {recipe.description || "No description"} <p/>
         </div>
         <hr className="hr-line" />
 

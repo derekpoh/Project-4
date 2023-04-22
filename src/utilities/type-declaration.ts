@@ -1,5 +1,4 @@
 import { ObjectId } from 'mongodb';
-import { Schema, Document, Types } from 'mongoose';
 
 export type UserState = {
     _id?: ObjectId,
@@ -52,4 +51,3 @@ type EmbeddedIngredients = {
   quantity: string,
   measurement?: string
 }
-
