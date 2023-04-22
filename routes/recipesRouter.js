@@ -10,5 +10,6 @@ router.delete("/:id", recipesController.delete)
 router.get("/:id/myrecipes", recipesController.myRecipes)
 router.post("/:id/rating", recipesController.setRating)
 router.post("/:id/comment", recipesController.setComment)
+router.get("/:id/edit", recipesController.edit)
 
 module.exports = router;

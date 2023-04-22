@@ -21,8 +21,8 @@ export type SearchResults = {
 }
 
 export type RecipeDetails = {
-  _id: ObjectId,
-  owner: ObjectId | string,
+  _id?: ObjectId,
+  owner: ObjectId | object,
   recipe: string,
   cuisine: string,
   description?: string,
@@ -30,8 +30,10 @@ export type RecipeDetails = {
   instructions: string[],
   rating?: EmbeddedRating[],
   averagerating?: string,
-  views: number,
+  views?: number,
   comments?: EmbeddedComment[],
+  imageurl?: string[],
+  imagefile?: string
 }
 
 type EmbeddedComment = {

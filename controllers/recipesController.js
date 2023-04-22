@@ -133,6 +133,17 @@ const deleteRecipe = async (req,res) => {
     }
 }
 
+const edit = async (req,res) => {
+  try {
+    console.log(req.params.id)
+    console.log(req.body)
+    const recipe = await Recipe.findById(req.params.id).populate("owner");
+    res.status(201).json(recipe);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}
+
 
 module.exports = {
     create,
@@ -142,5 +153,6 @@ module.exports = {
     myRecipes,
     cuisine,
     update,
-    delete: deleteRecipe
+    delete: deleteRecipe,
+    edit
 }
