@@ -1,19 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
-import TextField from '@mui/material/TextField';
 import { RecipeDetails } from '../../utilities/type-declaration';
 import type { UserState } from '../../utilities/type-declaration';
-import VisibilityIcon from "@mui/icons-material/Visibility";
-
-import { Link, useNavigate } from "react-router-dom";
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import IconButton from '@mui/material/IconButton';
-import ButtonUnstyled, { buttonUnstyledClasses } from '@mui/base/ButtonUnstyled';
-import { Stack, Snackbar, Alert, Button } from '@mui/material';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
 import "./RecipeDetailsPage.css"
 
@@ -37,7 +27,6 @@ const theme = createTheme(
     },
   },
 });
-
 
 
 
