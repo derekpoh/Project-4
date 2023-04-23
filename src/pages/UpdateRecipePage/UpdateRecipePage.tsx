@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import type { UserState } from '../../utilities/type-declaration';
 import UpdateRecipeForm from './UpdateRecipeForm';
 
 
@@ -11,7 +10,7 @@ import UpdateRecipeForm from './UpdateRecipeForm';
 
 const theme = createTheme();
 
-const UpdateRecipePage = ( {user}:{user:UserState} ) => {
+const UpdateRecipePage = ( ) => {
     return(
         <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
@@ -27,7 +26,7 @@ const UpdateRecipePage = ( {user}:{user:UserState} ) => {
             <Typography component="h1" variant="h5">
               Update Recipe
             </Typography>
-            <UpdateRecipeForm user={user} />
+            <UpdateRecipeForm />
           </Box>
         </Container>
       </ThemeProvider>
