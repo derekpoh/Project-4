@@ -2,9 +2,9 @@
 .book-image {
     position: absolute;
     width: 350px;
-    height: 350px;
+    height: 300px;
     border-radius: 5px;
-    margin-top: 55px;
+    margin-top: 85px;
     margin-left: 95px;
 }
 
@@ -44,14 +44,14 @@
 
 .favourite-button {
     position: relative;
-    top: 100px;
-    left:1170px;
+    top: -117px;
+    left:1100px;
 }
 
 .e-copies2 {
     position: absolute;
     left: 215px;
-    top: 500px;
+    top: 515px;
     font-size: 15px;
     font-family: 'poppins';
     color: #f49b36;
@@ -59,8 +59,8 @@
 
 .borrow-button {
     position: absolute;
-    left: 266px;
-    top: 600px;
+    top: 0;
+    right: 0;
 
 }
 

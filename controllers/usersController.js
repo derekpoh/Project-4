@@ -45,7 +45,22 @@ const login = async (req, res) => {
     }
 };
 
+const checkBookmark = async (req, res) => {
+    const {id} = req.params;
+    if (!id) {
+        return res.status(400).json({ error: "User is missing" });
+    }
+    try {
+    const user = await User.findById(id).populate({ path: 'bookmarks', options: { strictPopulate: false } }).exec();
+    res.json( user );  
+    } catch (error) {
+    console.log("Error:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
 module.exports = {
     create,
     login,
+    checkBookmark
 };

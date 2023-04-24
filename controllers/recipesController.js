@@ -1,4 +1,5 @@
 const Recipe = require("../models/Recipe")
+const User = require("../models/User")
 const VIEWINCREASE = 0.5
 
 
@@ -144,6 +145,36 @@ const edit = async (req,res) => {
     }
 }
 
+const addBookmark = async (req, res) => {
+  const {id} = req.params
+  const user = await User.findById(req.body._id);
+  if (user.bookmarks.find(bookmark => bookmark.toString() === id)) {
+    return res.status(400).json({ message: 'Recipe has already been bookmarked' });
+  } 
+  try {
+    await User.findByIdAndUpdate(req.body._id, {$push: {"bookmarks" : id}}).populate({ path: 'bookmarks', options: { strictPopulate: false } }).exec();
+    return res.status(200).json({ message: "Recipe has been bookmarked." }); 
+  } catch (error) {
+    console.log('error:', error);
+    return res.status(400).json({ error: error.message });
+  }
+};
+
+const deleteBookmark = async (req, res) => {
+  try {
+const {id} = req.params
+const user = await User.findById(req.body._id);
+if (user.bookmarks.find(bookmark => bookmark.toString() == id)) {
+  await User.findByIdAndUpdate(req.body._id, {$pull: {"bookmarks" : id}}).populate({ path: 'bookmarks', options: { strictPopulate: false } }).exec();
+    return res.status(201).json({ message: 'Remove bookmark' });
+}
+} catch (error) {
+  console.log('error:', error);
+  return res.status(400).json({ error: error.message });
+}     
+};
+
+
 
 module.exports = {
     create,
@@ -154,5 +185,7 @@ module.exports = {
     cuisine,
     update,
     delete: deleteRecipe,
-    edit
+    edit,
+    addBookmark,
+    deleteBookmark
 }

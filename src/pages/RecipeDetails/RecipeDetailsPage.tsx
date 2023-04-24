@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Rating from '@mui/material/Rating';
-import { RecipeDetails } from '../../utilities/type-declaration';
-import type { UserState } from '../../utilities/type-declaration';
+import { RecipeDetails, UserState } from '../../utilities/type-declaration';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
 import "./RecipeDetailsPage.css"
+import RecipeDetailsCarousel from './RecipeDetailsCarousel';
+import { BookmarkBorderOutlined, Bookmark } from '@mui/icons-material';
+import IconButton from '@mui/material/IconButton';
+
+
 
 const blue = {
   500: '#007FFF',
@@ -19,11 +23,14 @@ const grey = {
   900: '#24292f',
 };
 
-const theme = createTheme(
-  {
+const theme = createTheme({
   breakpoints: {
     values: {
+      xs: 0,
       sm: 600,
+      md: 960,
+      lg: 1280,
+      xl: 1920
     },
   },
 });
@@ -32,7 +39,7 @@ const theme = createTheme(
 
 const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
   const [recipe, setRecipe] = useState<RecipeDetails>({
-    owner: "",
+    owner: user,
     recipe: "",
     cuisine: "",
     ingredients: [{ name: '', quantity: '' }],
@@ -48,6 +55,10 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
     content: "",
     createdAt: "",
   }])
+  const [imageArray, setImageArray] = useState<string[]>([])
+  const [isBookmark, setIsBookmark] = useState(false);
+  const [isBookmarkAdded, setIsBookmarkAdded] = useState(false);
+
   const  { id }  = useParams();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   
@@ -60,12 +71,28 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
           setAverageRating(res.averageRating)
           const reversedArray = res.recipe.comments.reverse()
           setReversedComment(reversedArray)
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchRecipe();
-  }, [id]);
+          setImageArray([...res.recipe.imageurl.filter((url: string) => url), res.recipe.imagefile].filter(item => item));
+        } catch (err) {
+          console.error(err);
+        }
+      };
+      fetchRecipe();
+    }, [id]);
+
+    useEffect(() => {
+      const checkBookmark = async () => {
+        if (user) {
+        try {
+          const response = await fetch(`/api/users/${user._id}/bookmarks`);
+          const data = await response.json();
+          setIsBookmark(data.bookmarks.find((bookmark: RecipeDetails) => bookmark?._id?.toString() === id));
+        } catch (err) {
+          console.error(err);
+        }}
+      };
+      checkBookmark();
+    }, [id]);
+
 
   const handleRating = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -112,10 +139,40 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
     }
   }
 
+  const handleBookmark = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    try {
+      const method = isBookmark ? 'DELETE' : 'POST';
+      const response = await fetch(`/api/recipes/${id}/bookmark`, {
+        method: method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({_id: user._id}),
+      });
+      if (response.ok && method == "POST") {
+        setIsBookmark(!isBookmark); 
+        setIsBookmarkAdded(true);
+      } else if (response.ok) {
+        setIsBookmark(!isBookmark);
+        setIsBookmarkAdded(false);
+      }   
+      else if (response.status === 400) {
+        const data = await response.json();
+        alert(data.message);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
 
     return(
-      <ThemeProvider theme={theme}>
-      <img className="book-image" src={recipe?.imagefile || recipe?.imageurl} alt="Recipe image" />
+  
+     <ThemeProvider theme={theme}>
+
+    <RecipeDetailsCarousel recipes={imageArray}/>
+
 
     {!isMobile && !user ? (
       <div className="recipeName" style={{ marginTop: '100px' }}>{recipe?.recipe}</div>
@@ -128,6 +185,36 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
         )}
 
 <div className="authorName">Views: {recipe.views} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Rating: {averageRating}</div>
+
+        { !user? (
+                <></>
+              ) : (
+              <IconButton
+                className="favourite-button"
+                size="large"
+                aria-label="your bookmarks"
+                color='inherit'
+                title="Add Recipe to Your Bookmarks"
+                onClick={handleBookmark}
+              >
+                  {isBookmark ? (
+                  <>
+                  <Bookmark color='success' />
+                  </>
+                  ) : (
+                    <>
+                  <BookmarkBorderOutlined color='inherit' />
+                  </>
+                  )}
+                  {isBookmarkAdded ? (
+                    <>
+                  <span className="addedText">Recipe Bookmarked</span>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+              </IconButton>
+              )}
 
 <div className="e-copies2" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
 <span>{hover !== -1 ? hover : rating}</span>
@@ -157,6 +244,7 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
           <h3>Description</h3>
           {recipe.description || "No description"} <p/>
         </div>
+        
         <hr className="hr-line" />
 
         <div className="summary">
@@ -216,7 +304,9 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
         </ul>
         </div>
         </div>
-        
+
+             
+
       </ThemeProvider>
     )
 }

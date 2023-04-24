@@ -11,5 +11,7 @@ router.get("/:id/myrecipes", recipesController.myRecipes)
 router.post("/:id/rating", recipesController.setRating)
 router.post("/:id/comment", recipesController.setComment)
 router.get("/:id/edit", recipesController.edit)
+router.post("/:id/bookmark", recipesController.addBookmark)
+router.delete("/:id/bookmark", recipesController.deleteBookmark)
 
 module.exports = router;
