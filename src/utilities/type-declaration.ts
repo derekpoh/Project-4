@@ -22,7 +22,7 @@ export type SearchResults = {
 
 export type RecipeDetails = {
   _id?: ObjectId,
-  owner: ObjectId | object,
+  owner: UserState,
   recipe: string,
   cuisine: string,
   description?: string,

@@ -51,13 +51,36 @@ const checkBookmark = async (req, res) => {
         return res.status(400).json({ error: "User is missing" });
     }
     try {
-    const user = await User.findById(id).populate({ path: 'bookmarks', options: { strictPopulate: false } }).exec();
-    res.json( user );  
-    } catch (error) {
-    console.log("Error:", error);
-    res.status(500).json({ error: "Server error" });
-  }
-};
+        const user = await User.findById(id).populate({
+            path: 'bookmarks',
+            options: { strictPopulate: false },
+            populate: { path: 'owner', model: 'User' }
+          }).exec();
+            const bookmarksArray = []
+            user.bookmarks.forEach(recipe => {
+                const averageRating = calculateAverageRating(recipe.rating)
+                bookmarksArray.push({
+                  ...recipe.toJSON(),
+                  averagerating: averageRating
+                })
+            })
+            const updatedUser = {...user.toJSON(), bookmarksArray: bookmarksArray}
+            res.status(200).json( updatedUser );  
+        } catch (error) {
+            console.log("Error:", error);
+            res.status(500).json({ error: "Server error" });
+        }
+    };
+
+    const calculateAverageRating = (ratings) => {
+        let total = 0;
+        ratings.forEach((r) => {
+          total += r.rating;
+        });
+        const averageRating = (total / ratings.length).toFixed(2);
+        if (isNaN(averageRating) || !averageRating ) return "No Rating"
+        return parseFloat(averageRating);
+      };
 
 module.exports = {
     create,

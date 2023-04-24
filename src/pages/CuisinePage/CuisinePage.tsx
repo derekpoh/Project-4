@@ -37,7 +37,7 @@ const CuisinePage = () => {
       };
       fetchData();
     }, [cuisine]);
-  
+  console.log(results)
     return (
       <>
         { !isMobile ? (
@@ -86,6 +86,18 @@ const CuisinePage = () => {
           <div style={{ display: 'flex', alignItems: 'center' }}>
           <VisibilityIcon fontSize="small" />
           <span style={{ marginLeft: '5px' }}>{recipe.views}</span>
+          </div>
+          </Typography>
+          <Typography variant="subtitle1" fontSize="15px" fontFamily="Poppins" gutterBottom>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+          {typeof(recipe.averagerating) === "string" ? "No Rating" : 
+          <Rating
+           readOnly
+           precision={0.1}
+           name="rating"
+           value={recipe.averagerating}
+        />}
+          <span style={{ marginLeft: '5px' }}>{typeof(recipe.averagerating) === "string" ? null : recipe.averagerating}</span>
           </div>
           </Typography>
         </Box>

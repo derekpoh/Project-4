@@ -16,6 +16,7 @@ import CuisinePage from '../CuisinePage/CuisinePage';
 import UpdateRecipePage from '../UpdateRecipePage/UpdateRecipePage';
 
 
+
 const App = () => {
 
 const [user, setUser] = useState<UserState | null>(getUser())
@@ -30,7 +31,7 @@ const [user, setUser] = useState<UserState | null>(getUser())
       <Route path="/users/account" element={<UserAccountPage />}></Route>
       <Route path="/users/account/myrecipes" element={<MyRecipesPage user={user} />}></Route>
       <Route path="/users/account/createrecipe" element={<CreateRecipePage user={user} />}></Route>
-      <Route path="/users/account/bookmarks" element={<BookmarksPage />}></Route>
+      <Route path="/users/account/bookmarks" element={<BookmarksPage user={user} />}></Route>
       <Route path="/recipes/:id" element={<RecipeDetailsPage user={user} />}></Route>
       <Route path="/recipes/:id/update" element={<UpdateRecipePage />}></Route>
       <Route path='/recipes/cuisines/:cuisine' element={<CuisinePage />}></Route>
