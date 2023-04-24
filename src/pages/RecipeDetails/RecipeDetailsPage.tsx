@@ -64,8 +64,7 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
   const [isBookmarkAdded, setIsBookmarkAdded] = useState(false);
   const [metricActive, setMetricActive] = useState(true)
   const [cupArray, metricArray] = sortIngredients(recipe.ingredients)
-  console.log("CUP:", cupArray);
-  console.log("METRIC:", metricArray)
+
 
   useEffect(() => {
         const fetchRecipe = async () => {
@@ -236,9 +235,13 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
             />
 
           </div>
-          <button onClick={(event)=>handleRating(event)} style={{ marginTop: '10px' }}>
+          <Button 
+          variant="outlined"
+          onClick={(event)=>handleRating(event)} 
+          style={{ marginTop: '10px' }}
+          >
             Submit Rating
-          </button> 
+          </Button> 
         </div>
 
 
@@ -312,9 +315,11 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
       rows={4}
     />
   </div>
-  <button  onClick={(event)=>handleComment(event)}>
+  <Button  
+  onClick={(event)=>handleComment(event)}
+  >
     Submit Comment
-  </button>
+  </Button>
 </div>
 <div className="parent2">
   <div className="textarea-container">
