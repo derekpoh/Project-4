@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import { Box, Typography, Grid, useMediaQuery, createTheme } from "@mui/material";
+import { Box, Typography, Grid, useMediaQuery, createTheme, Rating } from "@mui/material";
 import { useEffect, useState } from "react";
 import { styled } from '@mui/material/styles';
 import { SearchResults } from "../../utilities/type-declaration";
@@ -37,7 +37,7 @@ const CuisinePage = () => {
       };
       fetchData();
     }, [cuisine]);
-  console.log(results)
+
     return (
       <>
         { !isMobile ? (

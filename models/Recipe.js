@@ -93,6 +93,12 @@ recipeSchema.pre('save', function(next) {
     this.cuisine = capitalize(this.cuisine);
     next();
   });
+
+ingredientSchema.pre('save', function(next) {
+    this.name = capitalize(this.name);
+    this.measurement = this.measurement.toLowerCase();
+    next();
+});
   
 const capitalize = (str) => {
     return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');

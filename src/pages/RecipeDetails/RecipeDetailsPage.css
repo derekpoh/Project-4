@@ -48,6 +48,12 @@
     left:1100px;
 }
 
+.metric-button {
+  position: relative;
+  top: -180px;
+  left:1050px;
+}
+
 .e-copies2 {
     position: absolute;
     left: 215px;

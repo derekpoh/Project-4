@@ -48,7 +48,7 @@ type EmbeddedRating = {
   content?: number
 }
 
-type EmbeddedIngredients = {
+export type EmbeddedIngredients = {
   name: string,
   quantity: string,
   measurement?: string

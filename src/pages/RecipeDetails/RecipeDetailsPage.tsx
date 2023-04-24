@@ -3,11 +3,12 @@ import { useParams } from 'react-router-dom';
 import Rating from '@mui/material/Rating';
 import { RecipeDetails, UserState } from '../../utilities/type-declaration';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useMediaQuery } from '@mui/material';
+import { Button, useMediaQuery } from '@mui/material';
 import "./RecipeDetailsPage.css"
 import RecipeDetailsCarousel from './RecipeDetailsCarousel';
 import { BookmarkBorderOutlined, Bookmark } from '@mui/icons-material';
 import IconButton from '@mui/material/IconButton';
+import { sortIngredients } from './RecipeSort';
 
 
 
@@ -38,6 +39,9 @@ const theme = createTheme({
 
 
 const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
+  const  { id }  = useParams();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   const [recipe, setRecipe] = useState<RecipeDetails>({
     owner: user,
     recipe: "",
@@ -58,10 +62,11 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
   const [imageArray, setImageArray] = useState<string[]>([])
   const [isBookmark, setIsBookmark] = useState(false);
   const [isBookmarkAdded, setIsBookmarkAdded] = useState(false);
+  const [metricActive, setMetricActive] = useState(true)
+  const [cupArray, metricArray] = sortIngredients(recipe.ingredients)
+  console.log("CUP:", cupArray);
+  console.log("METRIC:", metricArray)
 
-  const  { id }  = useParams();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  
   useEffect(() => {
         const fetchRecipe = async () => {
         try {
@@ -166,7 +171,6 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
     }
   };
 
-
     return(
   
      <ThemeProvider theme={theme}>
@@ -216,49 +220,75 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
               </IconButton>
               )}
 
-<div className="e-copies2" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-<span>{hover !== -1 ? hover : rating}</span>
-  <div style={{ display: 'flex', alignItems: 'center' }}>
-    <Rating
-      name="rating"
-      value={rating}
-      precision={0.5}
-      onChange={(event, newRating) => {
-        setRating(newRating);
-      }}
-      onChangeActive={(event, newHover) => {
-        setHover(newHover);
-      }}
-    />
+        <div className="e-copies2" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <span>{hover !== -1 ? hover : rating}</span>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Rating
+              name="rating"
+              value={rating}
+              precision={0.5}
+              onChange={(event, newRating) => {
+                setRating(newRating);
+              }}
+              onChangeActive={(event, newHover) => {
+                setHover(newHover);
+              }}
+            />
 
-  </div>
-  <button onClick={(event)=>handleRating(event)} style={{ marginTop: '10px' }}>
-    Submit Rating
-  </button> 
-</div>
-
-
-<hr className="hr-line" />
-
-<div className="summary">
-          <h3>Description</h3>
-          {recipe.description || "No description"} <p/>
+          </div>
+          <button onClick={(event)=>handleRating(event)} style={{ marginTop: '10px' }}>
+            Submit Rating
+          </button> 
         </div>
-        
+
+
         <hr className="hr-line" />
 
         <div className="summary">
+                  <h3>Description</h3>
+                  {recipe.description || "No description"} <p/>
+                </div>
+                
+                <hr className="hr-line" />
+
+
+
+        {metricActive ?
+        <div className="summary">
           <h3>Ingredients</h3>
         <ul>
-        {recipe?.ingredients?.map((ingredient, index) => (
+        {metricArray?.map((ingredient, index) => (
           <li key={index}>
             {ingredient.quantity} {ingredient.measurement} {ingredient.name}
             </li>
         )
         )}
         </ul>
-        </div>
-
+        </div> :
+                <div className="summary">
+                <h3>Ingredients</h3>
+              <ul>
+              {cupArray?.map((ingredient, index) => (
+                <li key={index}>
+                  {ingredient.quantity} {ingredient.measurement} {ingredient.name}
+                  </li>
+              )
+              )}
+              </ul>
+              </div>
+              }
+        <Button 
+        className="metric-button"
+        onClick={() => {setMetricActive(true)}}
+        variant={metricActive ? "contained" : "outlined"}
+        >Metric
+        </Button>
+        <Button 
+        className="metric-button"
+        onClick={() => {setMetricActive(false)}}
+        variant={metricActive ? "outlined" : "contained"}
+        >Cups
+        </Button>
         <div className="summary">
           <h3>Instructions</h3>
         <ul>
