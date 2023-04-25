@@ -1,11 +1,6 @@
 import * as usersAPI from "./users-api";
+import { DataProps } from "./type-declaration";
 
-type DataProps = {
-  username?: String,
-  email: String,
-  password: String,
-  confirm?: String
-};
 
 export async function signUp(userData: DataProps) {
   const token = await usersAPI.signUp(userData);

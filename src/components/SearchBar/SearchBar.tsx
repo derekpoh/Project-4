@@ -48,7 +48,7 @@ const SearchBar = () => {
   
       fetchData();
     }, [searchParams]);
-  
+
     return (
       <>
         { !isMobile ? (
@@ -56,8 +56,10 @@ const SearchBar = () => {
         ) : (
         <SearchTitle><Typography variant="h4" marginTop="50px" marginBottom="50px" color="#0065CC" textTransform="uppercase" letterSpacing='0.1em' fontSize="28px" textAlign='center' textOverflow="ellipsis" overflow="clip" width="345px">Search Results for<br/> "{query}"</Typography></SearchTitle>
         )}
+
         <Grid container spacing={2} sx={{ display: "flex", flexWrap: "wrap" }}>
-        {results.map((recipe,index) => (
+        {results.length > 0 ? 
+         (results.map((recipe,index) => (
           <Grid item xs={12} md={6} lg={4} key={index} sx={{ 
           flex: "1 0 33.33%",
           boxSizing: "border-box",
@@ -71,6 +73,7 @@ const SearchBar = () => {
             maxWidth: "33.33%",
           },
         }}>
+
       <SearchBox >
         <Box pr={4} sx={{ height: 200, '&:hover': {opacity: [0.9, 0.8, 0.7],}}}>
           <Link to={`/recipes/${recipe._id}`}>
@@ -139,7 +142,14 @@ const SearchBar = () => {
         </Box>
       </SearchBox>
     </Grid>
-  ))}
+  ))) : 
+  <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center'  }}>
+  <img src="/Pieman.jpg"  style={{  marginTop: "10px", marginLeft:"420px", width: "420px", height: "350px", marginBottom: '2rem', borderRadius: '50%' }} />
+  <Typography variant="h6" fontSize="20px" fontFamily="poppins" fontWeight="bold" color="#595959">
+   <span style={{marginLeft:"420px"}}>No Results</span>
+    </Typography>
+</Box>
+}
   </Grid>
   
       </>

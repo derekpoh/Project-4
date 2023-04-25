@@ -15,7 +15,7 @@ export async function signUp(userData: DataProps) {
     if (res.ok) {
       return data;
     } else if (data.keyPattern && data.keyPattern.email) {
-      throw new Error("email taken");
+      throw new Error("Email taken");
     } else {
       throw new Error("Invalid Sign Up");
     }

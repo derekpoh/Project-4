@@ -16,6 +16,7 @@ const calculateAverageRating = (ratings) => {
       
 const show = async (req,res) => {
     try {
+      console.log( "USER:",req.user)
         const recipe = await Recipe.findByIdAndUpdate(
             req.params.id,
             { $inc: { views: VIEWINCREASE } },

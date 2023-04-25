@@ -15,7 +15,7 @@ const formSchema = yup.object().shape({
     ingredients: yup.array(
         yup.object({
         name: yup.string().min(3, "Must be at least 3 characters").required("This field is required"),
-        quantity: yup.number().typeError("Only numbers allowed").positive("No negative numbers").required("This field is required"),
+        quantity: yup.string().required("This field is required"),
         measurement: yup.string(),
       })
     ).min(1, "Minimum 1 ingredient required"),

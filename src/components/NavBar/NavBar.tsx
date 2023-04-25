@@ -24,7 +24,7 @@ const Search = styled('div')(({ theme }) => ({
   marginLeft: 0,
   width: '100%',
   [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(30),
+    marginLeft: theme.spacing(25),
     width: '550px',
   },
 }));
@@ -47,7 +47,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('md')]: {
-      width: '20ch',
+      width: '55ch',
     },
   },
 }));
@@ -312,7 +312,7 @@ const NavBar = ({ user, setUser }: { user:UserState|null, setUser:SetUserType })
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" style={{ background: '#808000' }}>
+      <AppBar position="static" style={{ background: "orange" } } >
         <Toolbar>
           <IconButton
             size="large"
@@ -325,7 +325,7 @@ const NavBar = ({ user, setUser }: { user:UserState|null, setUser:SetUserType })
             <MenuIcon />
           </IconButton>
           <Link to="/">
-            Home
+            <img src="Homer_Simpson.jpeg" alt="Home Page" style={{ marginTop:"5px", marginLeft:"10px", width: "75px", height: "50px", borderRadius: '50%' }}/>
           </Link>
           <Search>
             <SearchIconWrapper>

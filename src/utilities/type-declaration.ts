@@ -1,5 +1,12 @@
 import { ObjectId } from 'mongodb';
 
+export type DataProps = {
+  username?: String,
+  email: String,
+  password: String,
+  confirm?: String
+};
+
 export type UserState = {
     _id?: ObjectId,
     username: string;
