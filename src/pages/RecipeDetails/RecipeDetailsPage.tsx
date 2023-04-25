@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import Rating from '@mui/material/Rating';
 import { RecipeDetails, UserState } from '../../utilities/type-declaration';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Button, useMediaQuery } from '@mui/material';
+import { Button, TextField, useMediaQuery } from '@mui/material';
 import "./RecipeDetailsPage.css"
 import RecipeDetailsCarousel from './RecipeDetailsCarousel';
 import { BookmarkBorderOutlined, Bookmark } from '@mui/icons-material';
@@ -305,13 +305,13 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
         </div>
   <div className="parent">
   <div className="textarea-container">
-    <textarea 
-      style={{ whiteSpace: 'pre-wrap' }}
+    <TextField
       className="textarea"
       name="comment"
       value={comment}
       onChange={(event) => setComment(event.target.value)}
       placeholder="Leave a comment"
+      multiline
       rows={4}
     />
   </div>

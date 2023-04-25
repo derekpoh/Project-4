@@ -97,8 +97,9 @@ const CreateRecipeForm = ( {user}:{user:UserState} ) => {
             {({values, errors, touched, setValues, isSubmitting}) => (
         <Form autoComplete="off">
               <Grid container direction="column" spacing={2}>
-                    <Grid item>
+                    
                     <Field
+                    sx={{width: "425px"}}
                     margin="normal"
                     fullWidth
                     type="text"
@@ -109,10 +110,11 @@ const CreateRecipeForm = ( {user}:{user:UserState} ) => {
                     helperText={ <ErrorMessage name="recipe" />}
                     error={errors.recipe && touched.recipe}
                     />
-                    </Grid>
+                    
 
-                    <Grid item>
+                    
                     <Field
+                    sx={{width: "425px"}}
                     margin="normal"
                     fullWidth      
                     type="text"
@@ -123,25 +125,28 @@ const CreateRecipeForm = ( {user}:{user:UserState} ) => {
                     helperText={ <ErrorMessage name="cuisine" />}
                     error={errors.cuisine && touched.cuisine}
                     />
-                    </Grid>
+                   
 
-                    <Grid item>
+                   
                     <Field
+                    sx={{width: "425px"}}
                     margin="normal"
                     fullWidth
                     type="text"
                     name="description"
                     id="description"
-                    label="Description"
+                    label="Description (Short & Sweet, no life stories)"
                     as={TextField}
+                    multiline
+                    rows={3}
                     helperText={ <ErrorMessage name="description" />}
                     error={errors.description && touched.description}
                     />
-                    </Grid>
-  
+                 
 
-        <Grid item>
-            Ingredients:
+                 <Typography variant="h6" fontFamily="Poppins" color="#0065CC" fontSize="22px" textOverflow="ellipsis" overflow="clip" gutterBottom>
+                 Ingredients:
+                 </Typography>
         <FieldArray name="ingredients">
             {
                 ({ push, remove }) => {
@@ -154,9 +159,10 @@ const CreateRecipeForm = ( {user}:{user:UserState} ) => {
                                 key={index}
                                 spacing={2}
                               >
-                                <Grid item container spacing={2} xs={12} sm="auto">
-                                <Grid item xs={12} sm={6}>
+                                <Grid item container spacing={2} xs={12} sm="auto" >
+                              
                                 <Field
+                                sx={{width: "200px"}}
                                 margin="normal"
                                 fullWidth
                                 type="text" 
@@ -167,10 +173,9 @@ const CreateRecipeForm = ( {user}:{user:UserState} ) => {
                                 helperText={ <ErrorMessage name={`ingredients[${index}].name`} />}
                                 error={errors.ingredients && errors.ingredients[index]  && errors.ingredients[index].name  && touched.ingredients && touched.ingredients[index] && touched.ingredients[index].name}
                                 />
-                                </Grid>
-
-                                <Grid item xs={12} sm={6}>
+                                 
                                 <Field 
+                                sx={{width: "100px"}}
                                 margin="normal"
                                 fullWidth
                                 type="text"
@@ -181,10 +186,9 @@ const CreateRecipeForm = ( {user}:{user:UserState} ) => {
                                 helperText={ <ErrorMessage name={`ingredients[${index}].quantity`} />}
                                error={errors.ingredients && errors.ingredients[index]  && errors.ingredients[index].quantity  && touched.ingredients && touched.ingredients[index] && touched.ingredients[index].quantity}
                                 />
-                                </Grid>
-
-                                <Grid item xs={12} sm={6}>
+                               
                                 <Field 
+                                sx={{width: "125px"}}
                                 margin="normal"
                                 fullWidth  
                                 type="text"
@@ -193,39 +197,39 @@ const CreateRecipeForm = ( {user}:{user:UserState} ) => {
                                 label="Measurement"
                                 as={TextField}
                                 />
-                                </Grid>   
-
-                                {index > 0 && (
-                                <Grid item xs={12} sm="auto">
+                                 
+                                {values.ingredients.length > 1 && (
+                            
                                 <Button
                                 disabled={isSubmitting}
                                 onClick={() => remove(index)}
                                 >
                                 Delete
                                 </Button>
-                               </Grid>
+                              
                                 )}
                         </Grid>
                          </Grid>
                             ))
                         }
-                        <Grid item>
+                        
                         <Button
                           disabled={isSubmitting}
                           variant="contained"
                           onClick={() => push("")}
+                          style={{ width: "200px" }}
                         >
                           Add Ingredient
                         </Button>
-                      </Grid>
+                      
                     </>
                 }
             }
         </FieldArray>
-        </Grid>
-
-        <Grid item>
-            Instructions:
+     <br/>
+      <Typography variant="h6" fontFamily="Poppins" color="#0065CC" fontSize="22px" textOverflow="ellipsis" overflow="clip" gutterBottom>
+                 Instructions:
+                 </Typography>
         <FieldArray name="instructions" >
             {
                 ({ push, remove }) => {
@@ -239,9 +243,9 @@ const CreateRecipeForm = ( {user}:{user:UserState} ) => {
                                 spacing={2}
                               >
                                 <Grid item container spacing={2} xs={12} sm="auto">
-                                <Grid item xs={12} sm={12}>
-                                <Field
                                 
+                                <Field
+                                 sx={{width: "425px"}}
                                  type="text"
                                  name={`instructions[${index}]`} 
                                  id="instructions"
@@ -250,38 +254,40 @@ const CreateRecipeForm = ( {user}:{user:UserState} ) => {
                                  helperText={ <ErrorMessage name={`instructions[${index}]`} />}
                                  error={errors.instructions && errors.instructions[index] && touched.instructions && touched.instructions[index]}
                                  /> 
-                               </Grid>
-
-                                {index > 0 && (
-                                <Grid item xs={12} sm="auto">
+                              
+                                {values.instructions.length > 1 && (
+                                
                                 <Button
                                 disabled={isSubmitting}
                                 onClick={() => remove(index)}
                                 >
                                 Delete
                                 </Button>
-                               </Grid>
+                              
                                 )}
                         </Grid>
                          </Grid>
                             ))
                         }
-                    <Grid item>
+                    
                         <Button
                           disabled={isSubmitting}
                           variant="contained"
                           onClick={() => push("")}
+                          style={{ width: "200px" }}
                         >
                           Add Instruction
                         </Button>
-                      </Grid>
+                      
                     </>
                 }
             }
         </FieldArray>
-        </Grid>
-
-        <Grid item>
+        
+        <br/>
+      <Typography variant="h6" fontFamily="Poppins" color="#0065CC" fontSize="22px" textOverflow="ellipsis" overflow="clip" gutterBottom>
+                 Image URL:
+                 </Typography>
         <FieldArray name="imageurl">
             {
                 ({ push, remove }) => {
@@ -295,10 +301,11 @@ const CreateRecipeForm = ( {user}:{user:UserState} ) => {
                                 spacing={2}
                               >
                                 <Grid item container spacing={2} xs={12} sm="auto">
-                                <Grid item xs={12} sm={12}>
+                               
                                 <Field
-                                margin="normal"
-                                fullWidth
+                                 sx={{width: "425px"}}
+                                 margin="normal"
+                                 fullWidth
                                  type="text"
                                  name={`imageurl[${index}]`} 
                                  id="imageurl"
@@ -307,41 +314,40 @@ const CreateRecipeForm = ( {user}:{user:UserState} ) => {
                                  helperText={ <ErrorMessage name={`imageurl[${index}]`} />}
                                  error={errors.imageurl && errors.imageurl[index] && touched.imageurl && touched.imageurl[index] }
                                  /> 
-                               </Grid>
-
+                              
                                 {index > 0 && (
-                                <Grid item xs={12} sm="auto">
                                 <Button
                                 disabled={isSubmitting}
                                 onClick={() => remove(index)}
                                 >
                                 Delete
                                 </Button>
-                               </Grid>
+                         
                                 )}
                         </Grid>
                          </Grid>
                             )) 
                         }
-                    <Grid item>
+                    
                         <Button
                           disabled={isSubmitting}
                           variant="contained"
                           onClick={() => push("")}
+                          style={{ width: "200px" }}
                         >
                           Add Image
                         </Button>
-                      </Grid>
+                      
                     </>
                 }
             }
         </FieldArray>
-        </Grid>
-
+      <br/>
                 <Grid item>
                     <input
                     type="file"
                     id="imagefile"
+                    style={{marginLeft:"-15px"}}
                     onChange={async (event) => {
                         if (event.target.files && event.target.files.length > 0) {
                         const file = event.target.files[0]
