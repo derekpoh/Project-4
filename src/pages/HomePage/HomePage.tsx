@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import LatestRecipesHomePage from "../LatestRecipes/LatestRecipesHomePage";
 import MostViewsHomePage from "../MostViews/MostViewsHomePage";
 import "./Homepage.css"
-import MostViewsPage from "../MostViews/MostViewsPage";
 
 
 
@@ -53,9 +52,9 @@ const HomePage = () => {
         />
       </div>
       <div style={{ marginLeft: '20px' }}>
- 
+        <LatestRecipesHomePage />
       </div>
-
+      <MostViewsHomePage />
       </div>
 
     )

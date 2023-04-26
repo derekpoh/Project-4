@@ -18,8 +18,8 @@ const SearchTitle = styled('div')(({ theme }) => ({
 const SearchBox = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.common.white,
   borderRadius: theme.shape.borderRadius,
-  padding: theme.spacing(2),
-  width: '290px', 
+  padding: theme.spacing(1),
+  width: '325px', 
   boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
   display: "flex",
   alignItems: "flex-start",
