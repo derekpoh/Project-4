@@ -16,7 +16,7 @@ const UserAccountPage = () => {
             paddingTop: theme => theme.spacing(4),
           }}
         >
-          <img src="/Homer_Simpson.jpeg" alt="Logo" width="80" />
+          <img src="/Homer_Simpson.jpeg" alt="Logo" width="80" style={{borderRadius:"50%"}} />
           <Typography component="h1" variant="h5" align="center" sx={{marginBottom:7, marginTop:1}}>
             User Account
           </Typography>

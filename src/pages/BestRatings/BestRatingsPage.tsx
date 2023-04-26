@@ -40,9 +40,9 @@ const BestRatingsPage = () => {
     return (
         <>
         { !isMobile ? (
-        <SearchTitle><Typography variant="h4" marginTop="50px" marginBottom="50px" color="#0065CC" textTransform="uppercase" letterSpacing='0.1em' textOverflow="ellipsis" overflow="clip" width="1400px">Best Ratings</Typography></SearchTitle>
+        <SearchTitle><Typography variant="h4" marginTop="50px" marginBottom="50px" color="black" textTransform="uppercase" letterSpacing='0.1em' textOverflow="ellipsis" overflow="clip" width="1400px">Best Ratings</Typography></SearchTitle>
         ) : (
-        <SearchTitle><Typography variant="h4" marginTop="50px" marginBottom="50px" color="#0065CC" textTransform="uppercase" letterSpacing='0.1em' fontSize="28px" textAlign='center' textOverflow="ellipsis" overflow="clip" width="345px">Best Ratings</Typography></SearchTitle>
+        <SearchTitle><Typography variant="h4" marginTop="50px" marginBottom="50px" color="black" textTransform="uppercase" letterSpacing='0.1em' fontSize="28px" textAlign='center' textOverflow="ellipsis" overflow="clip" width="345px">Best Ratings</Typography></SearchTitle>
         )}
         <Grid container spacing={2} sx={{ display: "flex", flexWrap: "wrap" }}>
         {results.map((recipe,index) => (

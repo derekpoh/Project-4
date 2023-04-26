@@ -144,7 +144,7 @@ const CreateRecipeForm = ( {user}:{user:UserState} ) => {
                     />
                  
 
-                 <Typography variant="h6" fontFamily="Poppins" color="#0065CC" fontSize="22px" textOverflow="ellipsis" overflow="clip" gutterBottom>
+                 <Typography variant="h6" fontFamily="Poppins" color="black" fontSize="22px" textOverflow="ellipsis" overflow="clip" gutterBottom>
                  Ingredients:
                  </Typography>
         <FieldArray name="ingredients">
@@ -227,7 +227,7 @@ const CreateRecipeForm = ( {user}:{user:UserState} ) => {
             }
         </FieldArray>
      <br/>
-      <Typography variant="h6" fontFamily="Poppins" color="#0065CC" fontSize="22px" textOverflow="ellipsis" overflow="clip" gutterBottom>
+      <Typography variant="h6" fontFamily="Poppins" color="black" fontSize="22px" textOverflow="ellipsis" overflow="clip" gutterBottom>
                  Instructions:
                  </Typography>
         <FieldArray name="instructions" >
@@ -285,7 +285,7 @@ const CreateRecipeForm = ( {user}:{user:UserState} ) => {
         </FieldArray>
         
         <br/>
-      <Typography variant="h6" fontFamily="Poppins" color="#0065CC" fontSize="22px" textOverflow="ellipsis" overflow="clip" gutterBottom>
+      <Typography variant="h6" fontFamily="Poppins" color="black" fontSize="22px" textOverflow="ellipsis" overflow="clip" gutterBottom>
                  Image URL:
                  </Typography>
         <FieldArray name="imageurl">

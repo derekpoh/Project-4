@@ -178,13 +178,13 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
 
 
     {!isMobile && !user ? (
-      <div className="recipeName" style={{ marginTop: '100px' }}>{recipe?.recipe}</div>
+      <div className="recipeName" style={{ marginTop: '100px', color:"black" }}>{recipe?.recipe}</div>
         ) : isMobile && !user ? (
-      <div className="recipeName" style={{ marginTop: '0px' }}>{recipe?.recipe}</div>
+      <div className="recipeName" style={{ marginTop: '0px', color:"black" }}>{recipe?.recipe}</div>
         ) : !isMobile && user ? (
-      <div className="recipeName" style={{ marginTop: '45px' }}>{recipe?.recipe}</div>
+      <div className="recipeName" style={{ marginTop: '45px', color:"black" }}>{recipe?.recipe}</div>
         ) : (
-      <div className="recipeName" style={{ marginTop: '0px' }}>{recipe?.recipe}</div>
+      <div className="recipeName" style={{ marginTop: '0px', color:"black" }}>{recipe?.recipe}</div>
         )}
 
 <div className="authorName">Views: {recipe.views} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Rating: {averageRating}</div>
@@ -323,7 +323,7 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
 </div>
 <div className="parent2">
   <div className="textarea-container">
-    <div className="commenttitle">
+    <div className="commenttitle" style={{color:"black"}}>
       {recipe?.comments?.length} Comment(s)
     </div> <br/>
       <ul className='commentlist'>

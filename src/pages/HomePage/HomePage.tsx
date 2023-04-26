@@ -2,6 +2,7 @@ import SimpleImageSlider from "react-simple-image-slider";
 import { useNavigate } from "react-router-dom";
 import LatestRecipesHomePage from "../LatestRecipes/LatestRecipesHomePage";
 import MostViewsHomePage from "../MostViews/MostViewsHomePage";
+import "./Homepage.css"
 import BestRatingsHomePage from "../BestRatings/BestRatingsHomePage";
 
 
@@ -36,8 +37,8 @@ const HomePage = () => {
         ];
     
     return(
-        <div style={{display: "flex"}}>
-        <div>
+        <div className="homepage">
+        <div className="carousel">
         <SimpleImageSlider
           width={540}
           height={510}
@@ -55,6 +56,7 @@ const HomePage = () => {
       </div>
       <MostViewsHomePage />
       </div>
+
     )
 }
 

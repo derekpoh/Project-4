@@ -48,7 +48,6 @@ const LatestRecipesHomePage = () => {
       }
       return [results[recipe1], results[recipe2]];
     };
-   
 
     return (
         <>

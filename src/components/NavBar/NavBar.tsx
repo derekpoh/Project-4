@@ -158,6 +158,16 @@ const NavBar = ({ user, setUser }: { user:UserState|null, setUser:SetUserType })
       PaperProps={{elevation:0}}
     >
        <Paper sx={{ width: 240, maxWidth: '100%' }}>
+       <MenuItem onClick={() => {handleLeftMenuClose(); handleLeftLoginMenuClose(() => navigate("/recipes/latestrecipes"));}}>
+        <ListItemText>Latest</ListItemText>
+      </MenuItem>
+      <MenuItem onClick={() => {handleLeftMenuClose(); handleLeftLoginMenuClose(() => navigate("/recipes/mostviews"));}}>
+        <ListItemText>Most Views</ListItemText>
+      </MenuItem>
+      <MenuItem onClick={() => {handleLeftMenuClose(); handleLeftLoginMenuClose(() => navigate("/recipes/bestratings"));}}>
+        <ListItemText>Best Ratings</ListItemText>
+      </MenuItem>
+      <Divider />
       <MenuItem onClick={() => {handleLeftMenuClose(); handleLeftLoginMenuClose(() => navigate("/recipes/cuisines/American"));}}>
         <ListItemText>American</ListItemText>
       </MenuItem>

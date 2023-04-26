@@ -220,7 +220,7 @@ const newestRecipes = async (req,res) => {
         averagerating: averageRating
       })
   })
-    res.status(201).json(recipes);
+    res.status(201).json(recipeArray);
     } catch (error) {
         res.status(500).json(error);
       }
