@@ -36,7 +36,7 @@ const UserAccountPage = ( {user}:{user:UserState} ) => {
             variant="contained"
             size="large"
             sx={{ width: "100%", 
-            backgroundColor: "orange"}}
+            backgroundColor: "brown"}}
             >My Recipes</Button>
         </Grid>
         <Grid item xs={6}>
@@ -45,7 +45,7 @@ const UserAccountPage = ( {user}:{user:UserState} ) => {
             variant="contained"
             size="large"
             sx={{ width: "100%", 
-            backgroundColor: "orange"}}
+            backgroundColor: "brown"}}
             >Bookmarks</Button>
         </Grid>
         <Grid item xs={6}>
@@ -54,7 +54,7 @@ const UserAccountPage = ( {user}:{user:UserState} ) => {
             variant="contained"
             size="large"
             sx={{ width: "100%", 
-            backgroundColor: "orange"}}
+            backgroundColor: "brown"}}
             >Create Recipe</Button>
         </Grid>
         </Grid>

@@ -94,7 +94,7 @@ const LatestRecipesHomePage = () => {
         </Box>
         <Box>
           { !isMobile ? (
-          <Typography variant="h6" fontFamily="Poppins" color="#0065CC" fontSize="22px" textOverflow="ellipsis" overflow="clip" gutterBottom>
+          <Typography variant="h6" fontFamily="Poppins" color="#0065CC" marginLeft={-2} fontSize="22px" textOverflow="ellipsis" overflow="clip" gutterBottom>
               {recipe.recipe}
           </Typography>
           ) : ( 
@@ -103,13 +103,13 @@ const LatestRecipesHomePage = () => {
           </Typography>
           )}
           <Typography variant="subtitle1" fontSize="15px" fontFamily="Poppins" gutterBottom>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', marginLeft: '-20px' }}>
           <VisibilityIcon fontSize="small" />
           <span style={{ marginLeft: '5px' }}>{recipe.views}</span>
           </div>
           </Typography>
           <Typography variant="subtitle1" fontSize="15px" fontFamily="Poppins" gutterBottom>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', marginLeft: '-20px' }}>
           {typeof(recipe.averagerating) === "string" ? "No Rating" : 
           <Rating
            readOnly
