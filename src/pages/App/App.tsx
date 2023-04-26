@@ -14,6 +14,9 @@ import { UserState } from '../../utilities/type-declaration';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import CuisinePage from '../CuisinePage/CuisinePage';
 import UpdateRecipePage from '../UpdateRecipePage/UpdateRecipePage';
+import MostViewsPage from '../MostViews/MostViewsPage';
+import BestRatingsPage from '../BestRatings/BestRatingsPage';
+import LatestRecipesPage from '../LatestRecipes/LatestRecipesPage';
 
 
 
@@ -32,6 +35,9 @@ const [user, setUser] = useState<UserState | null>(getUser())
       <Route path="/users/account/myrecipes" element={<MyRecipesPage user={user} />}></Route>
       <Route path="/users/account/createrecipe" element={<CreateRecipePage user={user} />}></Route>
       <Route path="/users/account/bookmarks" element={<BookmarksPage user={user} />}></Route>
+      <Route path="/recipes/mostviews" element={<MostViewsPage/>}></Route>
+      <Route path="/recipes/bestratings" element={<BestRatingsPage/>}></Route>
+      <Route path="/recipes/newestrecipes" element={<LatestRecipesPage/>}></Route>
       <Route path="/recipes/:id" element={<RecipeDetailsPage user={user} />}></Route>
       <Route path="/recipes/:id/update" element={<UpdateRecipePage />}></Route>
       <Route path='/recipes/cuisines/:cuisine' element={<CuisinePage />}></Route>

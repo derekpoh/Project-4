@@ -42,7 +42,10 @@ const MyRecipesCard = ( {recipe}:{recipe:RecipeDetails} ) => {
     <SearchBox >
     <Box pr={4} sx={{ height: 200, '&:hover': {opacity: [0.9, 0.8, 0.7],}}}>
         <Link to={`/recipes/${recipe._id}`}>
-        <img src={""} alt={recipe.recipe} style={{height: "200px", width: "120px", verticalAlign: "top" }} />
+        <img 
+        src={`${recipe.imageurl?.[Math.floor(Math.random() * recipe.imageurl.length)] || recipe.imagefile}`}
+        alt={recipe.recipe} 
+        style={{height: "200px", width: "200px", verticalAlign: "top" }} />
         </Link>
     </Box>
     <Box>

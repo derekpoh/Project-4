@@ -17,16 +17,6 @@ export type UserState = {
 
 export type SetUserType = (user: UserState|null) => void
 
-export type SearchResults = {
-  _id: ObjectId,
-  recipe: string,
-  cuisine: string,
-  views: number,
-  averagerating: number,
-  ingredients: EmbeddedIngredients[]
-  owner: UserState ,
-}
-
 export type RecipeDetails = {
   _id?: ObjectId,
   owner: UserState,

@@ -1,12 +1,18 @@
-import { useState, useEffect } from "react";
-import { styled } from '@mui/material/styles';
-import { useNavigate, Link } from "react-router-dom";
-import { RecipeDetails, UserState } from "../../utilities/type-declaration";
+import { Link } from "react-router-dom";
 import { Box, Typography, Grid, useMediaQuery, createTheme, Rating } from "@mui/material";
+import { useEffect, useState } from "react";
+import { styled } from '@mui/material/styles';
 import VisibilityIcon from "@mui/icons-material/Visibility"
+import { RecipeDetails } from "../../utilities/type-declaration";
 
 const theme = createTheme();
 
+const SearchTitle = styled('div')(({ theme }) => ({
+    fontSize: '2rem',
+    fontWeight: 'bold',
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+}));
   
 const SearchBox = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.common.white,
@@ -18,39 +24,28 @@ const SearchBox = styled(Box)(({ theme }) => ({
 }));
 
 
-const BookmarksPage = ( {user}:{user:UserState} ) => {
-  const navigate = useNavigate();
-  const [bookmarks, setBookmarks] = useState<RecipeDetails[]>([]);
+const BestRatingsPage = () => {
+    const [results, setResults] = useState<RecipeDetails[]>([]);
     const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-    
-  useEffect(() => {
-    if (!user) {
-      navigate("/");
-      return;
-    }
-    const fetchBookmarks = async () => {
-      try {
-        const response = await fetch(`/api/users/${user._id}/bookmarks`);
-        const data = await response.json(); 
-        setBookmarks(data.bookmarksArray);  
-      } catch (error) {
-        console.log('Error fetching favourites:', error);
-      }
-    };
 
-    fetchBookmarks();
-  }, [user._id, navigate]);  
-
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch("/api/recipes/bestratings");
+            const data = await response.json();
+            setResults(data);
+        };
+        fetchData();
+      }, []);
+console.log(results)
     return (
-      <>
+        <>
         { !isMobile ? (
-        <Typography variant="h4" marginTop="50px" marginBottom="50px" color="#0065CC" textTransform="uppercase" letterSpacing='0.1em' textOverflow="ellipsis" overflow="clip" width="1400px">Bookedmarked Recipes</Typography>
+        <SearchTitle><Typography variant="h4" marginTop="50px" marginBottom="50px" color="#0065CC" textTransform="uppercase" letterSpacing='0.1em' textOverflow="ellipsis" overflow="clip" width="1400px">Best Ratings</Typography></SearchTitle>
         ) : (
-        <Typography variant="h4" marginTop="50px" marginBottom="50px" color="#0065CC" textTransform="uppercase" letterSpacing='0.1em' fontSize="28px" textAlign='center' textOverflow="ellipsis" overflow="clip" width="345px">Bookedmarked Recipes</Typography>
+        <SearchTitle><Typography variant="h4" marginTop="50px" marginBottom="50px" color="#0065CC" textTransform="uppercase" letterSpacing='0.1em' fontSize="28px" textAlign='center' textOverflow="ellipsis" overflow="clip" width="345px">Best Ratings</Typography></SearchTitle>
         )}
-        {bookmarks.length > 0 ? 
         <Grid container spacing={2} sx={{ display: "flex", flexWrap: "wrap" }}>
-        {bookmarks.map((recipe,index) => (
+        {results.map((recipe,index) => (
           <Grid item xs={12} md={6} lg={4} key={index} sx={{ 
           flex: "1 0 33.33%",
           boxSizing: "border-box",
@@ -64,6 +59,7 @@ const BookmarksPage = ( {user}:{user:UserState} ) => {
             maxWidth: "33.33%",
           },
         }}>
+
       <SearchBox >
         <Box pr={4} sx={{ height: 200, '&:hover': {opacity: [0.9, 0.8, 0.7],}}}>
           <Link to={`/recipes/${recipe._id}`}>
@@ -111,15 +107,9 @@ const BookmarksPage = ( {user}:{user:UserState} ) => {
       </SearchBox>
     </Grid>
   ))}
-  </Grid> :
-  <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center'  }}>
-  <img src="/Homer_Simpson.jpeg"  style={{  marginTop: "10px", width: "420px", height: "280px", marginBottom: '2rem', borderRadius: '50%' }} />
-  <Typography variant="h6" fontSize="20px" fontFamily="poppins" fontWeight="bold" color="#595959">No Bookmarks</Typography>
-</Box>
-}
+  </Grid>
       </>
-    );
-  }
+    )
+}
 
-
-  export default BookmarksPage
+export default BestRatingsPage

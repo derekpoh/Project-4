@@ -3,9 +3,9 @@ import { Box, Typography, Grid, useMediaQuery, createTheme } from "@mui/material
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { styled } from '@mui/material/styles';
-import { SearchResults } from "../../utilities/type-declaration";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import Rating from '@mui/material/Rating';
+import { RecipeDetails } from "../../utilities/type-declaration";
 
 
 const theme = createTheme();
@@ -30,7 +30,7 @@ const SearchBox = styled(Box)(({ theme }) => ({
 
 const SearchBar = () => {
     const [searchParams] = useSearchParams();
-    const [results, setResults] = useState<SearchResults[]>([]);
+    const [results, setResults] = useState<RecipeDetails[]>([]);
     const query = searchParams.get("q") || "";
     const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
     const regex = new RegExp(query, "gi")
@@ -77,7 +77,9 @@ const SearchBar = () => {
       <SearchBox >
         <Box pr={4} sx={{ height: 200, '&:hover': {opacity: [0.9, 0.8, 0.7],}}}>
           <Link to={`/recipes/${recipe._id}`}>
-            <img src={""} alt={recipe.recipe} style={{height: "200px", width: "120px", verticalAlign: "top" }} />
+            <img src={`${recipe.imageurl?.[Math.floor(Math.random() * recipe.imageurl.length)] || recipe.imagefile}`}
+            alt={recipe.recipe} 
+            style={{height: "200px", width: "200px", verticalAlign: "top" }} />
           </Link>
         </Box>
         <Box>
@@ -144,7 +146,7 @@ const SearchBar = () => {
     </Grid>
   ))) : 
   <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center'  }}>
-  <img src="/Pieman.jpg"  style={{  marginTop: "10px", marginLeft:"420px", width: "420px", height: "350px", marginBottom: '2rem', borderRadius: '50%' }} />
+  <img src="/Pieman.jpg"  style={{  marginTop: "10px", marginLeft:"420px", height: "310px", marginBottom: '2rem', borderRadius: '50%' }} />
   <Typography variant="h6" fontSize="20px" fontFamily="poppins" fontWeight="bold" color="#595959">
    <span style={{marginLeft:"420px"}}>No Results</span>
     </Typography>

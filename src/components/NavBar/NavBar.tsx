@@ -312,7 +312,7 @@ const NavBar = ({ user, setUser }: { user:UserState|null, setUser:SetUserType })
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" style={{ background: "orange" } } >
+      <AppBar position="static" style={{ background: "orange" }} >
         <Toolbar>
           <IconButton
             size="large"
@@ -325,7 +325,7 @@ const NavBar = ({ user, setUser }: { user:UserState|null, setUser:SetUserType })
             <MenuIcon />
           </IconButton>
           <Link to="/">
-            <img src="Homer_Simpson.jpeg" alt="Home Page" style={{ marginTop:"5px", marginLeft:"10px", width: "75px", height: "50px", borderRadius: '50%' }}/>
+            <img src="/Homer_Simpson.jpeg" alt="Home Page" style={{ marginTop:"5px", marginLeft:"10px", width: "75px", height: "50px", borderRadius: '50%' }}/>
           </Link>
           <Search>
             <SearchIconWrapper>

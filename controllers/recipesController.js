@@ -16,7 +16,6 @@ const calculateAverageRating = (ratings) => {
       
 const show = async (req,res) => {
     try {
-      console.log( "USER:",req.user)
         const recipe = await Recipe.findByIdAndUpdate(
             req.params.id,
             { $inc: { views: VIEWINCREASE } },
@@ -137,8 +136,6 @@ const deleteRecipe = async (req,res) => {
 
 const edit = async (req,res) => {
   try {
-    console.log(req.params.id)
-    console.log(req.body)
     const recipe = await Recipe.findById(req.params.id).populate("owner");
     res.status(201).json(recipe);
     } catch (error) {
@@ -154,10 +151,10 @@ const addBookmark = async (req, res) => {
   } 
   try {
     await User.findByIdAndUpdate(req.body._id, {$push: {"bookmarks" : id}}).populate({ path: 'bookmarks', options: { strictPopulate: false } }).exec();
-    return res.status(200).json({ message: "Recipe has been bookmarked." }); 
+    res.status(200).json({ message: "Recipe has been bookmarked." }); 
   } catch (error) {
     console.log('error:', error);
-    return res.status(400).json({ error: error.message });
+    res.status(400).json({ error: error.message });
   }
 };
 
@@ -175,6 +172,59 @@ if (user.bookmarks.find(bookmark => bookmark.toString() == id)) {
 }     
 };
 
+const mostViews = async (req,res) => {
+  try {
+    const recipes = await Recipe.find({ views: { $gte: 50 } }).populate("owner");
+    const recipeArray = []
+    recipes.forEach(recipe => {
+      const averageRating = calculateAverageRating(recipe.rating)
+      recipeArray.push({
+        ...recipe.toJSON(),
+        averagerating: averageRating
+      })
+  })
+    res.status(201).json(recipeArray);
+    } catch (error) {
+        res.status(500).json(error);
+      }
+}
+
+const bestRatings = async (req,res) => {
+  try {
+    const recipes = await Recipe.find().populate("owner");
+    const recipeArray = []
+    recipes.forEach(recipe => {
+      const averageRating = calculateAverageRating(recipe.rating)
+      recipeArray.push({
+        ...recipe.toJSON(),
+        averagerating: averageRating
+      })
+  })
+  const bestRatingArray = recipeArray.filter(recipe => {
+    return recipe.averagerating >= 4
+  })
+    res.status(201).json(bestRatingArray);
+    } catch (error) {
+        res.status(500).json(error);
+      }
+}
+
+const newestRecipes = async (req,res) => {
+  try {
+    const recipes = await Recipe.find().sort({ createdAt: -1 }).limit(21).populate("owner");
+    const recipeArray = []
+    recipes.forEach(recipe => {
+      const averageRating = calculateAverageRating(recipe.rating)
+      recipeArray.push({
+        ...recipe.toJSON(),
+        averagerating: averageRating
+      })
+  })
+    res.status(201).json(recipes);
+    } catch (error) {
+        res.status(500).json(error);
+      }
+}
 
 
 module.exports = {
@@ -188,5 +238,8 @@ module.exports = {
     delete: deleteRecipe,
     edit,
     addBookmark,
-    deleteBookmark
+    deleteBookmark,
+    mostViews,
+    bestRatings,
+    newestRecipes,
 }
