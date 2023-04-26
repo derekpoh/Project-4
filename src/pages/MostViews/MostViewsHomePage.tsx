@@ -24,28 +24,40 @@ const SearchBox = styled(Box)(({ theme }) => ({
 }));
 
 
-const BestRatingsPage = () => {
-    const [results, setResults] = useState<RecipeDetails[]>([]);
+
+const MostViewsHomePage = () => {
+    const [display, setDisplay] = useState<RecipeDetails[]>([]);
     const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch("/api/recipes/bestratings");
-            const data = await response.json();
-            setResults(data);
+        const response = await fetch("/api/recipes/mostviews");
+        const data = await response.json();
+        const displayRecipe = getRandomRecipe(data);
+        setDisplay(displayRecipe);
         };
         fetchData();
       }, []);
 
+    const getRandomRecipe = (results: RecipeDetails[]) => {
+      const recipe1 = Math.floor(Math.random() * results.length);
+      let recipe2 = Math.floor(Math.random() * results.length);
+      while (recipe2 === recipe1) {
+        recipe2 = Math.floor(Math.random() * results.length);
+      }
+      return [results[recipe1], results[recipe2]];
+    };
+
+
     return (
-        <>
+      <Box sx={{ marginLeft: "-1415px", marginTop: "300px" }}>
         { !isMobile ? (
-        <SearchTitle><Typography variant="h4" marginTop="50px" marginBottom="50px" color="#0065CC" textTransform="uppercase" letterSpacing='0.1em' textOverflow="ellipsis" overflow="clip" width="1400px">Best Ratings</Typography></SearchTitle>
+        <SearchTitle><Typography variant="h4"  marginLeft="15px" marginTop="-5px" color="black" textTransform="uppercase" letterSpacing='0.1em' fontSize="20px" textOverflow="ellipsis" overflow="clip" width="1400px">Most Views</Typography></SearchTitle>
         ) : (
-        <SearchTitle><Typography variant="h4" marginTop="50px" marginBottom="50px" color="#0065CC" textTransform="uppercase" letterSpacing='0.1em' fontSize="28px" textAlign='center' textOverflow="ellipsis" overflow="clip" width="345px">Best Ratings</Typography></SearchTitle>
+         <SearchTitle><Typography variant="h4"  marginBottom="50px" color="black" textTransform="uppercase" letterSpacing='0.1em' fontSize="28px" textAlign='center' textOverflow="ellipsis" overflow="clip" width="345px">Most Views</Typography></SearchTitle>
         )}
         <Grid container spacing={2} sx={{ display: "flex", flexWrap: "wrap" }}>
-        {results.map((recipe,index) => (
+        {display.map((recipe,index) => (
           <Grid item xs={12} md={6} lg={4} key={index} sx={{ 
           flex: "1 0 33.33%",
           boxSizing: "border-box",
@@ -108,8 +120,9 @@ const BestRatingsPage = () => {
     </Grid>
   ))}
   </Grid>
-      </>
+  
+      </Box>
     )
 }
 
-export default BestRatingsPage
+export default MostViewsHomePage

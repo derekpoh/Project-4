@@ -1,6 +1,9 @@
 import SimpleImageSlider from "react-simple-image-slider";
 import { useNavigate } from "react-router-dom";
-import { SyntheticEvent } from "react";
+import LatestRecipesHomePage from "../LatestRecipes/LatestRecipesHomePage";
+import MostViewsHomePage from "../MostViews/MostViewsHomePage";
+import BestRatingsHomePage from "../BestRatings/BestRatingsHomePage";
+
 
 const HomePage = () => {
     const navigate = useNavigate();
@@ -14,26 +17,26 @@ const HomePage = () => {
         idx: 1,
         event: "/search?q=coffee"
         },
-            { url: "https://st2.depositphotos.com/3818339/10141/v/950/depositphotos_101411426-stock-illustration-vector-modern-seafood-seamless-pattern.jpg",
-            idx: 2,
-            event: "/search?q=seafood"
+        { url: "https://st2.depositphotos.com/3818339/10141/v/950/depositphotos_101411426-stock-illustration-vector-modern-seafood-seamless-pattern.jpg",
+        idx: 2,
+        event: "/search?q=seafood"
         },
-            { url: "https://i.imgur.com/ca6xStA.jpg",
-            idx: 3,
-            event: "/search?q=ice cream"
+        { url: "https://i.imgur.com/ca6xStA.jpg",
+        idx: 3,
+        event: "/search?q=ice cream"
         },
         { url: "https://i.imgur.com/Lcwxunf.jpg",
         idx: 4,
         event: "/search?q=chocolate"
         },
         { url: "https://i.pinimg.com/564x/5a/5e/38/5a5e38468258298eeae9a83601ebbb38.jpg",
-        idx: 5,
+        idx: 5, 
         event: "/search?q=coffee"
         },
         ];
     
     return(
-        
+        <div style={{display: "flex"}}>
         <div>
         <SimpleImageSlider
           width={540}
@@ -47,7 +50,12 @@ const HomePage = () => {
           autoPlay={true}
         />
       </div>
-      
+      <div style={{ marginLeft: '20px' }}>
+      <LatestRecipesHomePage />
+      </div>
+      <MostViewsHomePage />
+      <BestRatingsHomePage />
+      </div>
     )
 }
 
