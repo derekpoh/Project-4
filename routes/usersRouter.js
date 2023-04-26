@@ -5,6 +5,6 @@ const ensureLoggedIn = require("../config/ensureLoggedIn")
 
 router.post("/register", userController.create);
 router.post("/login", userController.login);
-router.get("/:id/bookmarks",  userController.checkBookmark)
+router.get("/:id/bookmarks", ensureLoggedIn,  userController.checkBookmark)
 
 module.exports = router;

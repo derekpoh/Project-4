@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import LatestRecipesHomePage from "../LatestRecipes/LatestRecipesHomePage";
 import MostViewsHomePage from "../MostViews/MostViewsHomePage";
 import "./Homepage.css"
-import BestRatingsHomePage from "../BestRatings/BestRatingsHomePage";
+
 
 
 const HomePage = () => {

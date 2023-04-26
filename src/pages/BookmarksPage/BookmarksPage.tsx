@@ -30,7 +30,14 @@ const BookmarksPage = ( {user}:{user:UserState} ) => {
     }
     const fetchBookmarks = async () => {
       try {
-        const response = await fetch(`/api/users/${user._id}/bookmarks`);
+        const token = localStorage.getItem("token");
+        const response = await fetch(`/api/users/${user._id}/bookmarks`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          },
+        });
         const data = await response.json(); 
         setBookmarks(data.bookmarksArray);  
       } catch (error) {

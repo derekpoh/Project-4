@@ -6,6 +6,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import * as yup from "yup"
 import { Grid } from "@mui/material";
+import { UserState } from "../../utilities/type-declaration";
 
 
 const formSchema = yup.object().shape({
@@ -29,7 +30,7 @@ const ONEMB = 1024 * 1024; // 1 MB
 
 
 
-const UpdateRecipeForm = () => {
+const UpdateRecipeForm = ( {user}:{user:UserState} ) => {
   const {id} = useParams()
   const navigate = useNavigate();
   const [error, setError] = useState("");
@@ -76,10 +77,12 @@ const UpdateRecipeForm = () => {
         validationSchema={formSchema}
         onSubmit={async (values) => {
             try{
+                const token = localStorage.getItem("token");
                 const response = await fetch(`/api/recipes/${id}`, {
                   method: "PUT",
                   headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
                   },
                   body: JSON.stringify(values), 
                 });
@@ -96,18 +99,29 @@ const UpdateRecipeForm = () => {
         >
             {({values, errors, touched, setValues, isSubmitting}) => (
         <Form autoComplete="off">
-      {useEffect(() => {
-        const fetchRecipe = async () => {
-        try {
-          const response = await fetch(`/api/recipes/${id}/edit`);
-          const recipe = await response.json();
-          setValues(recipe)
-        } catch (err) {
-          console.error(err);
-        }
-      };
-      fetchRecipe();
-      }, [id])}
+         {useEffect(() => {
+            if (!user) {
+              navigate("/");
+              return;
+            }
+            const fetchRecipe = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                const response = await fetch(`/api/recipes/${id}/edit`, {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": `Bearer ${token}`
+                },
+              });
+              const recipe = await response.json();
+              setValues(recipe)
+            } catch (err) {
+              console.error(err);
+            }
+          };
+          fetchRecipe();
+          }, [id])}
               <Grid container direction="column" spacing={2}>
                     <Grid item>
                     <Field

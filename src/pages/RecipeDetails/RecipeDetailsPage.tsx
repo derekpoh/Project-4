@@ -87,7 +87,14 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
       const checkBookmark = async () => {
         if (user) {
         try {
-          const response = await fetch(`/api/users/${user._id}/bookmarks`);
+          const token = localStorage.getItem("token");
+          const response = await fetch(`/api/users/${user._id}/bookmarks`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`
+            },
+          });
           const data = await response.json();
           setIsBookmark(data.bookmarks.find((bookmark: RecipeDetails) => bookmark?._id?.toString() === id));
         } catch (err) {
@@ -101,10 +108,12 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
   const handleRating = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     try{
-      const response = await fetch(`/api/recipes/${id}/rating`, {
+        const token = localStorage.getItem("token");
+        const response = await fetch(`/api/recipes/${id}/rating`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify( {rating, user} ), 
       });
@@ -122,10 +131,12 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
   const handleComment = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     try{
-      const response = await fetch(`/api/recipes/${id}/comment`, {
+        const token = localStorage.getItem("token");
+        const response = await fetch(`/api/recipes/${id}/comment`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify( {comment, user} ), 
       });
@@ -146,11 +157,13 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
   const handleBookmark = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     try {
-      const method = isBookmark ? 'DELETE' : 'POST';
-      const response = await fetch(`/api/recipes/${id}/bookmark`, {
+       const token = localStorage.getItem("token");
+       const method = isBookmark ? 'DELETE' : 'POST';
+       const response = await fetch(`/api/recipes/${id}/bookmark`, {
         method: method,
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify({_id: user._id}),
       });
@@ -187,13 +200,13 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
       <div className="recipeName" style={{ marginTop: '0px', color:"black" }}>{recipe?.recipe}</div>
         )}
 
-<div className="authorName">Views: {recipe.views} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Rating: {averageRating}</div>
+<div className="creatorName">Views: {recipe.views} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Rating: {averageRating}</div>
 
         { !user? (
                 <></>
               ) : (
               <IconButton
-                className="favourite-button"
+                className="bookmark-button"
                 size="large"
                 aria-label="your bookmarks"
                 color='inherit'
@@ -219,8 +232,11 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
               </IconButton>
               )}
 
-        <div className="e-copies2" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-        <span>{hover !== -1 ? hover : rating}</span>
+         { !user? (
+                <></>
+              ) : (
+         <div className="set-rating" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+         <span>{hover !== -1 ? hover : rating}</span>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <Rating
               name="rating"
@@ -243,6 +259,7 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
             Submit Rating
           </Button> 
         </div>
+        )}
 
 
         <hr className="hr-line" />
@@ -303,31 +320,38 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
         )}
         </ul>
         </div>
-  <div className="parent">
-  <div className="textarea-container">
-    <TextField
-      className="textarea"
-      name="comment"
-      value={comment}
-      onChange={(event) => setComment(event.target.value)}
-      placeholder="Leave a comment"
-      multiline
-      rows={4}
-    />
-  </div>
-  <Button  
-  onClick={(event)=>handleComment(event)}
-  >
-    Submit Comment
-  </Button>
-</div>
-<div className="parent2">
-  <div className="textarea-container">
-    <div className="commenttitle" style={{color:"black"}}>
-      {recipe?.comments?.length} Comment(s)
-    </div> <br/>
-      <ul className='commentlist'>
-        {reversedComment.map((comment, index) => (
+
+        <div className="parent">
+        <div className="textarea-container">
+          <TextField
+            className="textarea"
+            name="comment"
+            value={comment}
+            onChange={(event) => setComment(event.target.value)}
+            placeholder="Leave a comment"
+            multiline
+            rows={4}
+          />
+        </div>
+        { !user? (
+                <></>
+              ) : ( 
+        <Button  
+        onClick={(event)=>handleComment(event)}
+        >
+          Submit Comment
+        </Button>
+        )}
+      </div>
+
+
+    <div className="parent2">
+      <div className="textarea-container">
+        <div className="commenttitle" style={{color:"black"}}>
+          {recipe?.comments?.length} Comment(s)
+        </div> <br/>
+          <ul className='commentlist'>
+            {reversedComment.map((comment, index) => (
           <li className='commentpoint' key={index}>
           <span className='commentname'> 
             {comment.name} ( {comment.createdAt && new Date(comment.createdAt).toLocaleString()} )

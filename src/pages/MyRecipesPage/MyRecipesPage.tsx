@@ -15,9 +15,20 @@ const MyRecipesPage = ( {user}:{user:UserState} ) => {
   const [recipes, setRecipes] = useState([])
 
     useEffect(() => {
+        if (!user) {
+          navigate("/");
+          return;
+        }
         const fetchRecipes = async () => {
         try {
-          const response = await fetch(`/api/recipes/${user._id}/myrecipes`);
+          const token = localStorage.getItem("token");
+          const response = await fetch(`/api/recipes/${user._id}/myrecipes`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`
+            },
+          });
           const recipes = await response.json();
           setRecipes(recipes)
       } catch (err) {
@@ -37,7 +48,8 @@ const MyRecipesPage = ( {user}:{user:UserState} ) => {
         {recipes.length > 0 ? 
         <Grid container spacing={2} sx={{ display: "flex", flexWrap: "wrap" }}>
         {recipes.map((recipe,index) => (
-          <MyRecipesCard recipe={recipe} key={index} />
+          <MyRecipesCard recipe={recipe} key={index}  />
+
   ))}
   </Grid> :
   <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center'  }}>

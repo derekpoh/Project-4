@@ -29,7 +29,7 @@ const RegisterForm = ( {setUser}: {setUser : SetUserType} ) => {
       await signUp(form);
       setUser(getUser());
       navigate("/");
-    } catch (error) {
+    } catch (error: any) {
       if (error.message.includes("email")) {
         setError("This email is already used");
       } else {

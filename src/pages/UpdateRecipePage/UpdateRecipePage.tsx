@@ -4,13 +4,14 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import UpdateRecipeForm from './UpdateRecipeForm';
+import { UserState } from '../../utilities/type-declaration';
 
 
 
 
 const theme = createTheme();
 
-const UpdateRecipePage = ( ) => {
+const UpdateRecipePage = ( {user}:{user:UserState} ) => {
     return(
         <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
@@ -26,7 +27,7 @@ const UpdateRecipePage = ( ) => {
             <Typography component="h1" variant="h5">
               Update Recipe
             </Typography>
-            <UpdateRecipeForm />
+            <UpdateRecipeForm user={user}/>
           </Box>
         </Container>
       </ThemeProvider>

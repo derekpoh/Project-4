@@ -1,8 +1,17 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Grid, Button, Container, Box, Typography } from "@mui/material";
 import { useEffect } from "react";
+import { UserState } from "../../utilities/type-declaration";
 
-const UserAccountPage = () => {
+const UserAccountPage = ( {user}:{user:UserState} ) => {
+  const navigate= useNavigate();
+  useEffect(() => {
+    if(!user) {
+      navigate("/");
+      return
+    }
+  }, [user, navigate])
+
     return(
         <>
        <Container maxWidth="xs">

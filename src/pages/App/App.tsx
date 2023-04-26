@@ -10,7 +10,7 @@ import MyRecipesPage from '../MyRecipesPage/MyRecipesPage';
 import CreateRecipePage from '../CreateRecipePage/CreateRecipePage';
 import BookmarksPage from '../BookmarksPage/BookmarksPage';
 import RecipeDetailsPage from '../RecipeDetails/RecipeDetailsPage';
-import { UserState } from '../../utilities/type-declaration';
+import { SetUserType, UserState, } from '../../utilities/type-declaration';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import CuisinePage from '../CuisinePage/CuisinePage';
 import UpdateRecipePage from '../UpdateRecipePage/UpdateRecipePage';
@@ -22,16 +22,16 @@ import LatestRecipesPage from '../LatestRecipes/LatestRecipesPage';
 
 const App = () => {
 
-const [user, setUser] = useState<UserState | null>(getUser())
+const [user, setUser] = useState<UserState>(getUser())
 
   return (
     <main>
-      <NavBar user={user} setUser={setUser} />
+      <NavBar user={user} setUser={setUser as SetUserType} />
       <Routes>
       <Route path="/" element={<HomePage/>}></Route>
-      <Route path="/users/login" element={<LoginPage setUser={setUser} />}></Route>
-      <Route path="/users/register" element={<RegisterPage setUser={setUser} />}></Route>
-      <Route path="/users/account" element={<UserAccountPage />}></Route>
+      <Route path="/users/login" element={<LoginPage setUser={setUser as SetUserType} />}></Route>
+      <Route path="/users/register" element={<RegisterPage setUser={setUser as SetUserType} />}></Route>
+      <Route path="/users/account" element={<UserAccountPage user={user} />}></Route>
       <Route path="/users/account/myrecipes" element={<MyRecipesPage user={user} />}></Route>
       <Route path="/users/account/createrecipe" element={<CreateRecipePage user={user} />}></Route>
       <Route path="/users/account/bookmarks" element={<BookmarksPage user={user} />}></Route>
@@ -39,7 +39,7 @@ const [user, setUser] = useState<UserState | null>(getUser())
       <Route path="/recipes/bestratings" element={<BestRatingsPage/>}></Route>
       <Route path="/recipes/latestrecipes" element={<LatestRecipesPage/>}></Route>
       <Route path="/recipes/:id" element={<RecipeDetailsPage user={user} />}></Route>
-      <Route path="/recipes/:id/update" element={<UpdateRecipePage />}></Route>
+      <Route path="/recipes/:id/update" element={<UpdateRecipePage user={user} />}></Route>
       <Route path='/recipes/cuisines/:cuisine' element={<CuisinePage />}></Route>
       <Route path="/search" element={<SearchBar />}></Route>
       </Routes>

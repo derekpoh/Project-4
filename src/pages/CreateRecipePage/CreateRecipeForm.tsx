@@ -1,5 +1,5 @@
 import { FieldArray, Field, Formik,Form, ErrorMessage } from "formik"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -47,6 +47,13 @@ const CreateRecipeForm = ( {user}:{user:UserState} ) => {
 }
     const navigate = useNavigate();
     const [error, setError] = useState("");
+
+    useEffect(() => {
+      if(!user) {
+        navigate("/");
+        return
+      }
+    }, [user, navigate])
     
       const convertToBase64 = (file: File): Promise<string> => {
         return new Promise((resolve,reject) => {
@@ -76,10 +83,12 @@ const CreateRecipeForm = ( {user}:{user:UserState} ) => {
         validationSchema={formSchema}
         onSubmit={async (values) => {
             try{
+                const token = localStorage.getItem("token");
                 const response = await fetch("/api/recipes/create", {
                   method: "POST",
                   headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
                   },
                   body: JSON.stringify(values), 
                 });

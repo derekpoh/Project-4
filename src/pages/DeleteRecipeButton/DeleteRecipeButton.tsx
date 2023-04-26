@@ -7,12 +7,17 @@ const DeleteRecipeButton = ( {recipe, checkbox}: {recipe: RecipeDetails, checkbo
     const navigate = useNavigate();
     const handleDelete = async () => {
         try{
+            const token = localStorage.getItem("token");
             const response = await fetch(`/api/recipes/${recipe._id}`, {
               method: "Delete",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+              },
             });
-            const data = await response.json();
+            await response.json();
             if (response.ok) {
-              navigate(`/`)
+              navigate(`/users/account`)
             } else {
               throw new Error("Failed to delete recipe")
             }
