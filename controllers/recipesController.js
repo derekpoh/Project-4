@@ -1,6 +1,6 @@
 const Recipe = require("../models/Recipe")
 const User = require("../models/User")
-const VIEWINCREASE = 0.5
+const VIEWINCREASE = 1
 
 
 const calculateAverageRating = (ratings) => {

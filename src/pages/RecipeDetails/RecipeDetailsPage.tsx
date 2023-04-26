@@ -191,13 +191,13 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
 
 
     {!isMobile && !user ? (
-      <div className="recipeName" style={{ marginTop: '100px', color:"black" }}>{recipe?.recipe}</div>
+      <div className="recipeName" style={{ color:"black" }}>{recipe?.recipe}</div>
         ) : isMobile && !user ? (
-      <div className="recipeName" style={{ marginTop: '0px', color:"black" }}>{recipe?.recipe}</div>
+      <div className="recipeName" style={{ color:"black" }}>{recipe?.recipe}</div>
         ) : !isMobile && user ? (
-      <div className="recipeName" style={{ marginTop: '45px', color:"black" }}>{recipe?.recipe}</div>
+      <div className="recipeName" style={{ color:"black" }}>{recipe?.recipe}</div>
         ) : (
-      <div className="recipeName" style={{ marginTop: '0px', color:"black" }}>{recipe?.recipe}</div>
+      <div className="recipeName" style={{color:"black" }}>{recipe?.recipe}</div>
         )}
 
 <div className="creatorName">Views: {recipe.views} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Rating: {averageRating}</div>
@@ -271,7 +271,18 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
                 
                 <hr className="hr-line" />
 
-
+                <Button 
+        className="metric-button"
+        onClick={() => {setMetricActive(true)}}
+        variant={metricActive ? "contained" : "outlined"}
+        >Metric
+        </Button>
+        <Button 
+        className="metric-button"
+        onClick={() => {setMetricActive(false)}}
+        variant={metricActive ? "outlined" : "contained"}
+        >Cups
+        </Button>
 
         {metricActive ?
         <div className="summary">
@@ -297,18 +308,8 @@ const RecipeDetailsPage = ( {user}:{user:UserState} ) => {
               </ul>
               </div>
               }
-        <Button 
-        className="metric-button"
-        onClick={() => {setMetricActive(true)}}
-        variant={metricActive ? "contained" : "outlined"}
-        >Metric
-        </Button>
-        <Button 
-        className="metric-button"
-        onClick={() => {setMetricActive(false)}}
-        variant={metricActive ? "outlined" : "contained"}
-        >Cups
-        </Button>
+
+
         <div className="summary">
           <h3>Instructions</h3>
         <ul>

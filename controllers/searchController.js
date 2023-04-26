@@ -21,6 +21,7 @@ const search = async (req, res) => {
       const recipes = await Recipe.find({
         $or: [
           { recipe: regexQuery },
+          { description: regexQuery },
           { cuisine: regexQuery },
           { owner:  {$in: ownerIds } },
           { "ingredients.name": regexQuery },

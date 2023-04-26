@@ -1,7 +1,7 @@
 .recipeName {
-    position: relative;
-    margin-top: 80px;
-    left: 530px;
+    position: absolute;
+    margin-top: -330px;
+    left: 535px;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: #0065CC;
@@ -14,7 +14,7 @@
 
 .creatorName {
     position: relative;
-    margin-top: 20px;
+    margin-top: -240px;
     margin-left: 530px;
     text-align: justify;
     letter-spacing: 0.05em;
@@ -34,20 +34,20 @@
 
 .bookmark-button {
     position: relative;
-    top: -117px;
-    left:1100px;
+    top: -130px;
+    left:1200px;
 }
 
 .metric-button {
-  position: relative;
-  top: -180px;
-  left:1050px;
+  position: absolute;
+  top: 10px;
+  left: 530px;
 }
 
 .set-rating {
     position: absolute;
     left: 210px;
-    top: 565px;
+    top: 540px;
     font-size: 15px;
     font-family: 'poppins';
     color: #f49b36;

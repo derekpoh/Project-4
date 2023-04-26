@@ -322,7 +322,7 @@ const NavBar = ({ user, setUser }: { user:UserState|null, setUser:SetUserType })
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" style={{ background: "orange" }} >
+      <AppBar position="static" style={{ background: "grey" }} >
         <Toolbar>
           <IconButton
             size="large"
