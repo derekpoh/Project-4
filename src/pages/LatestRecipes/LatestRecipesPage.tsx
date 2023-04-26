@@ -30,7 +30,7 @@ const LatestRecipesPage = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch("/api/recipes/newestrecipes");
+            const response = await fetch("/api/recipes/latestrecipes");
             const data = await response.json();
             setResults(data);
         };

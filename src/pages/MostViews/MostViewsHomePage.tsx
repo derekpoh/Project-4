@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { styled } from '@mui/material/styles';
 import VisibilityIcon from "@mui/icons-material/Visibility"
 import { RecipeDetails } from "../../utilities/type-declaration";
+import EastIcon from "@mui/icons-material/East"
 
 const theme = createTheme();
 
@@ -15,12 +16,13 @@ const SearchTitle = styled('div')(({ theme }) => ({
 }));
   
 const SearchBox = styled(Box)(({ theme }) => ({
-    backgroundColor: theme.palette.common.white,
-    borderRadius: theme.shape.borderRadius,
-    padding: theme.spacing(2),
-    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-    display: "flex",
-    alignItems: "flex-start",
+  backgroundColor: theme.palette.common.white,
+  borderRadius: theme.shape.borderRadius,
+  padding: theme.spacing(2),
+  width: '290px', 
+  boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+  display: "flex",
+  alignItems: "flex-start",
 }));
 
 
@@ -50,13 +52,22 @@ const MostViewsHomePage = () => {
 
 
     return (
-      <Box sx={{ marginLeft: "-1415px", marginTop: "300px" }}>
+      <Box sx={{ marginLeft: "-1415px", marginTop: "260px" }}>
         { !isMobile ? (
-        <SearchTitle><Typography variant="h4"  marginLeft="15px" marginTop="-5px" color="black" textTransform="uppercase" letterSpacing='0.1em' fontSize="20px" textOverflow="ellipsis" overflow="clip" width="1400px">Most Views</Typography></SearchTitle>
+        <SearchTitle>
+          <Link to="/recipes/mostviews" style={{color:"orange"}}>
+          <Typography style={{ display: 'flex', alignItems: 'center' }} variant="h4"  marginLeft="15px" marginTop="-5px" color="black" textTransform="uppercase" letterSpacing='0.1em' fontSize="20px" textOverflow="ellipsis" overflow="clip" width="1400px">
+          Most Views 
+          <EastIcon color="error" />
+          </Typography>
+          </Link>
+          </SearchTitle>
         ) : (
-         <SearchTitle><Typography variant="h4"  marginBottom="50px" color="black" textTransform="uppercase" letterSpacing='0.1em' fontSize="28px" textAlign='center' textOverflow="ellipsis" overflow="clip" width="345px">Most Views</Typography></SearchTitle>
+         <SearchTitle><Typography style={{ display: 'flex', alignItems: 'center' }}  variant="h4"  marginBottom="50px" color="black" textTransform="uppercase" letterSpacing='0.1em' fontSize="28px" textAlign='center' textOverflow="ellipsis" overflow="clip" width="345px">
+          Most Views <EastIcon color="error"/>
+          </Typography></SearchTitle>
         )}
-        <Grid container spacing={2} sx={{ display: "flex", flexWrap: "wrap" }}>
+        <Grid container spacing={-45} sx={{ display: "flex", flexWrap: "wrap" }}>
         {display.map((recipe,index) => (
           <Grid item xs={12} md={6} lg={4} key={index} sx={{ 
           flex: "1 0 33.33%",
@@ -73,12 +84,12 @@ const MostViewsHomePage = () => {
         }}>
 
       <SearchBox >
-        <Box pr={4} sx={{ height: 200, '&:hover': {opacity: [0.9, 0.8, 0.7],}}}>
+        <Box pr={4} sx={{ height: 150, width:130 ,'&:hover': {opacity: [0.9, 0.8, 0.7],}}}>
           <Link to={`/recipes/${recipe._id}`}>
             <img 
             src={`${recipe.imageurl?.[Math.floor(Math.random() * recipe.imageurl.length)] || recipe.imagefile}`} 
             alt={recipe.recipe} 
-            style={{height: "200px", width: "200px", verticalAlign: "top" }} />
+            style={{height: "150px", width: "150px", verticalAlign: "top" }} />
           </Link>
         </Box>
         <Box>
@@ -91,12 +102,6 @@ const MostViewsHomePage = () => {
                 {recipe.recipe}
           </Typography>
           )}
-        <Typography variant="subtitle1" fontSize="15px" fontFamily="Poppins" gutterBottom>
-            Cuisine: {recipe.cuisine}
-          </Typography>
-          <Typography variant="subtitle1" fontSize="15px" fontFamily="Poppins" gutterBottom>
-            By {recipe.owner.username}
-          </Typography>
           <Typography variant="subtitle1" fontSize="15px" fontFamily="Poppins" gutterBottom>
           <div style={{ display: 'flex', alignItems: 'center' }}>
           <VisibilityIcon fontSize="small" />

@@ -1,9 +1,4 @@
-type DataProps = {
-  username?: String,
-  email: String,
-  password: String,
-  confirm?: String
-};
+import { DataProps } from "./type-declaration";
 
 export async function signUp(userData: DataProps) {
     const res = await fetch("/api/users/register", {

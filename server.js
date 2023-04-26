@@ -17,6 +17,7 @@ app.use(bodyParser.json({ limit: "10mb"}));
 app.use(bodyParser.urlencoded({ extended: true, limit: "10mb"}));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "dist")));
+app.use(require('./config/checkToken'));
 app.use("/api/users", usersRouter);
 app.use("/api/recipes", recipesRouter)
 app.use("/api/search", searchRouter)

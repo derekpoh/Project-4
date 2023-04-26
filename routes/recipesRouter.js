@@ -6,7 +6,7 @@ const ensureLoggedIn = require("../config/ensureLoggedIn")
 
 router.get("/mostviews", recipesController.mostViews)
 router.get("/bestratings", recipesController.bestRatings)
-router.get("/newestrecipes", recipesController.newestRecipes)
+router.get("/latestrecipes", recipesController.newestRecipes)
 router.post("/create",  recipesController.create)
 router.get("/cuisines/:cuisine", recipesController.cuisine)
 router.get("/:id", recipesController.show)

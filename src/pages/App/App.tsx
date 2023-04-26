@@ -37,7 +37,7 @@ const [user, setUser] = useState<UserState | null>(getUser())
       <Route path="/users/account/bookmarks" element={<BookmarksPage user={user} />}></Route>
       <Route path="/recipes/mostviews" element={<MostViewsPage/>}></Route>
       <Route path="/recipes/bestratings" element={<BestRatingsPage/>}></Route>
-      <Route path="/recipes/newestrecipes" element={<LatestRecipesPage/>}></Route>
+      <Route path="/recipes/latestrecipes" element={<LatestRecipesPage/>}></Route>
       <Route path="/recipes/:id" element={<RecipeDetailsPage user={user} />}></Route>
       <Route path="/recipes/:id/update" element={<UpdateRecipePage />}></Route>
       <Route path='/recipes/cuisines/:cuisine' element={<CuisinePage />}></Route>

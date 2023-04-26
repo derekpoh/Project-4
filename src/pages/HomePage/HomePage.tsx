@@ -25,7 +25,7 @@ const HomePage = () => {
         idx: 3,
         event: "/search?q=ice cream"
         },
-        { url: "https://i.imgur.com/Lcwxunf.jpg",
+        { url: "https://i.imgur.com/SocsSth.jpg",
         idx: 4,
         event: "/search?q=chocolate"
         },
@@ -40,7 +40,7 @@ const HomePage = () => {
         <div>
         <SimpleImageSlider
           width={540}
-          height={525}
+          height={510}
           images={images}
           showBullets={false}
           showNavs={true}
@@ -54,7 +54,6 @@ const HomePage = () => {
       <LatestRecipesHomePage />
       </div>
       <MostViewsHomePage />
-      <BestRatingsHomePage />
       </div>
     )
 }

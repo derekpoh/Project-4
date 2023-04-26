@@ -46,9 +46,9 @@ const BestRatingsHomePage = () => {
       }
       return [results[recipe1], results[recipe2]];
     };
-
+console.log(display)
     return (
-      <Box sx={{ marginLeft: "-1415px", marginTop: "300px" }}>
+      <Box sx={{ marginLeft: "-1415px", marginTop: "600px" }}>
         { !isMobile ? (
         <SearchTitle><Typography variant="h4"  marginLeft="15px" marginTop="-5px" color="black" textTransform="uppercase" letterSpacing='0.1em' fontSize="20px" textOverflow="ellipsis" overflow="clip" width="1400px">Best Ratings</Typography></SearchTitle>
         ) : (
