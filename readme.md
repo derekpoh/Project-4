@@ -12,7 +12,7 @@
   - 1 week
 
 ## Description
-This project represents my take on a food recipe website and my cooking hobby. This application was my capstone project while I was attending the Software Engineering Immersive course at General Assembly. It sums up the skills and experiences that I have accumulated so far.
+This project represents my take on a food recipe website and my cooking hobby. This application was my capstone project while I was attending the Software Engineering Immersive course at General Assembly. It sums up the skills and experiences that I have accumulated thus far.
 
 As food recipe consumers, some users might find it exasperating to filter through a slew of descriptive texts and stories just to access the ingredients and instructions section. Such problems would be especially cumbersome for those with limited time, thus exacerbating the redundancy of said stories.
 
