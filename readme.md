@@ -61,14 +61,19 @@ I broke down the project into several major components:
  Home Page
 ![homepage2](public/readme_resource/Homepage2.png)
  Search Function
+ <br/>
 ![search](public/readme_resource/Search.png)
  Category Filters
+ <br/>
 ![filter](public/readme_resource/Filter.png)
  Create and Update Recipe Form
+ <br/>
 ![create](public/readme_resource/Create.png)
  Recipe Details
+ <br/>
 ![recipedetails](public/readme_resource/Recipedetails.png)
  Recipes created by user
+ <br/>
 ![user](public/readme_resource/user.png)
 
 
